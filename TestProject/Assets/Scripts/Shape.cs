@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class TullyMonster67 : MonoBehaviour
+public class Shape : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    [SerializeField] GameObject skull1;
-
+    [SerializeField] int points;
+    [SerializeField] int moveTime;
+    [SerializeField] float elapsedTime;
     void Start()
     {
-        skull1.GetComponent<SpriteRenderer>().enabled = false;
-
+        
     }
 
     // Update is called once per frame
