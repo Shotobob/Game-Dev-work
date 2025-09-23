@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,20 +10,36 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] GameObject skull2;
     [SerializeField] GameObject skull3;
     [SerializeField] Text scoreText;
+    [SerializeField] GameObject manager;
     private int score = 0;
     private int count = 0;
+    public bool end = false;
+    public bool reset = false;
     void Start()
     {
         skull1.GetComponent<SpriteRenderer>().enabled = false;
         skull2.GetComponent<SpriteRenderer>().enabled = false;
         skull3.GetComponent<SpriteRenderer>().enabled = false;
+        count = 0;
+        score = 0;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            skull1.GetComponent<SpriteRenderer>().enabled = false;
+            skull2.GetComponent<SpriteRenderer>().enabled = false;
+            skull3.GetComponent<SpriteRenderer>().enabled = false;
+            count = 0;
+            score = 0;
+            scoreText.text = "Score: " + score;
+            end = false;
+            //manager.GetComponent<Shape>().Move();
+        }
+        //reset = true;
     }
     public void visibleSkull()
     {
@@ -34,6 +51,7 @@ public class TullyMonster67 : MonoBehaviour
         if(count == 2)
         {
             skull3.GetComponent<SpriteRenderer>().enabled = true;
+            end = true;
         }
         count++;
         
