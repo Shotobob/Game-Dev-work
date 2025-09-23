@@ -17,7 +17,7 @@ public class Shape : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && manager.GetComponent<TullyMonster67>().end == true)
         {
             
             Move();

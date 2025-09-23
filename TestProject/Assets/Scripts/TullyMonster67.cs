@@ -9,6 +9,10 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] GameObject skull1;
     [SerializeField] GameObject skull2;
     [SerializeField] GameObject skull3;
+    [SerializeField] GameObject square;
+    [SerializeField] GameObject circle;
+    [SerializeField] GameObject triangle;
+
     [SerializeField] Text scoreText;
     [SerializeField] GameObject manager;
     private int score = 0;
@@ -28,11 +32,14 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.R) && end == true)
         {
             skull1.GetComponent<SpriteRenderer>().enabled = false;
             skull2.GetComponent<SpriteRenderer>().enabled = false;
             skull3.GetComponent<SpriteRenderer>().enabled = false;
+            triangle.GetComponent<Shape>().Move();
+            circle.GetComponent<Shape>().Move();
+            square.GetComponent<Shape>().Move();
             count = 0;
             score = 0;
             scoreText.text = "Score: " + score;
