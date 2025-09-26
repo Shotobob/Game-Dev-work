@@ -322,6 +322,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1999705353}
+  rings: []
+  poleNum: 2
+  selected: 0
 --- !u!70 &516532448
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -598,6 +601,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1999705353}
+  rings: []
+  poleNum: 1
+  selected: 0
 --- !u!70 &579152582
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -821,6 +827,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1999705353}
+  rings: []
+  poleNum: 0
+  selected: 0
 --- !u!70 &1083390557
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1291,6 +1300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb657e2ea9c31942b3e1fa85041c673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poles: []
+  selectedPole: -1
 --- !u!4 &1999705355
 Transform:
   m_ObjectHideFlags: 0
