@@ -16,9 +16,9 @@ public class Rings : MonoBehaviour
     {
         
     }
-    public void move(int x, int y)
+    public void move(float x, float y)
     {
-        transform.position = new Vector3(0, 0, 0);
+        transform.position = new Vector3(x, y, transform.position.z);
     }
     public int getWeight()
     {

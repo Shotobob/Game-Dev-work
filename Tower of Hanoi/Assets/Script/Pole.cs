@@ -18,10 +18,7 @@ public class Pole : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(poleNum == 3 && rings.Count == 5)
-        {
-            //win
-        }
+        
     }
     
     private void OnMouseDown()
@@ -32,6 +29,14 @@ public class Pole : MonoBehaviour
     {
         return rings;
     }
+    public void addRings(Rings ring)
+    {
+        rings.Insert(0, ring);
+    }
+    public void removeRings()
+    {
+        rings.Remove(rings[0]);
+    }
     public void setSelected(bool tf)
     {
         selected = tf;
@@ -39,7 +44,7 @@ public class Pole : MonoBehaviour
     }
     public bool isSelected()
     {
-        return true;
+        return selected;
     }
     public void setColor()
     {
