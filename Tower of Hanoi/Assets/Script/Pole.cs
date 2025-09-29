@@ -18,8 +18,12 @@ public class Pole : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(poleNum == 3 && rings.Count == 5)
+        {
+            //win
+        }
     }
+    
     private void OnMouseDown()
     {
         manager.GetComponent<TullyMonster67>().poleClicked(poleNum);
@@ -39,7 +43,7 @@ public class Pole : MonoBehaviour
     }
     public void setColor()
     {
-        if(selected = false)
+        if(selected == false)
         {
             GetComponent<SpriteRenderer>().color = new Color(118f/255f, 118f/255f, 118f/255f);
         }
