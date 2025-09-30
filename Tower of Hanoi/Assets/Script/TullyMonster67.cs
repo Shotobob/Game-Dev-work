@@ -6,28 +6,41 @@ using UnityEngine.UI;
 
 public class TullyMonster67 : MonoBehaviour
 {
+    [SerializeField] GameObject CJstroud;
+    [SerializeField] GameObject sixseven;
     [SerializeField] List<Pole> poles;
     public int selectedPole = -1;
     [SerializeField] Text moves;
     [SerializeField] Text win;
     public int movesNum = 0;
     public bool end = false;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         win.enabled = false;
+        CJstroud.GetComponent<SpriteRenderer>().enabled = false;
+        sixseven.GetComponent<SpriteRenderer>().enabled = false;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(movesNum == 67 || movesNum == 6 || movesNum == 7)
+        {
+            sixseven.GetComponent<SpriteRenderer>().enabled = true;
+        }
+        if(movesNum == 8)
+        {
+            sixseven.GetComponent<SpriteRenderer>().enabled = false;
+        }
         moves.text = "Moves: " + movesNum;
         if (poles[2].getRings().Count == 5)
         {
             end = true;
             win.enabled = true;
+            CJstroud.GetComponent<SpriteRenderer>().enabled = true;
         }
         if (Input.GetKeyDown(KeyCode.R) && end == true)
         {
@@ -41,6 +54,8 @@ public class TullyMonster67 : MonoBehaviour
             poles[2].getRings().Clear();
             end = false;
             win.enabled = false;
+            CJstroud.GetComponent<SpriteRenderer>().enabled = false;
+            sixseven.GetComponent<SpriteRenderer>().enabled = false;
 
         }
         if (Input.GetKeyDown(KeyCode.W))
