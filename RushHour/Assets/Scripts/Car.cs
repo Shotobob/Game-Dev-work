@@ -8,6 +8,7 @@ public class Car : MonoBehaviour
 {
     [SerializeField] bool vert; 
     [SerializeField] bool race; 
+    public bool end = false;
     
     
     [SerializeField] GameObject manager;
