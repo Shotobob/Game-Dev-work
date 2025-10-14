@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b97d6d7f6fe151489e8ff437271963b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sList:
+  squares:
   - {fileID: 4157526227853412459}
   - {fileID: 1854814242}
   - {fileID: 636926880}

@@ -11,7 +11,7 @@ public class TullyMonster67 : MonoBehaviour
 {
     
     
-    [SerializeField] List<Square> sList;
+    [SerializeField] List<Square> squares;
     private int[,] slist = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}};
     private int switchNum = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -63,33 +63,39 @@ public class TullyMonster67 : MonoBehaviour
         {
             if(slist[row + 1, col] == 16)
             {
-                slist[row + 1, col] = 16;
-                slist[row16, col16] = switchNum;
+                slist[row, col] = 16;
+                slist[row + 1, col] = switchNum;
+                squares[switchNum - 1].Move(row + 1, col);
+
             }
         }
         else if (row - 1 < 4 && row - 1 >=0)
         {
             if(slist[row - 1, col] == 16)
             {
-                slist[row - 1, col] = 16;
-                slist[row16, col16] = switchNum;
+                slist[row, col] = 16;
+                slist[row - 1, col] = switchNum;
+                squares[switchNum - 1].Move(row - 1, col);
             }
         }
         else if (col - 1 < 4 && col - 1 >=0)
         {
             if(slist[row, col - 1] == 16)
             {
-                slist[row, col - 1] = 16;
-                slist[row16, col16] = switchNum;
+                slist[row, col] = 16;
+                slist[row, col - 1] = switchNum;
+                squares[switchNum - 1].Move(row, col - 1);
             }
         }
         else if (col + 1 < 4 && col + 1 >=0)
         {
             if(slist[row, col - 1] == 16)
             {
-                slist[row, col - 1] = 16;
-                slist[row16, col16] = switchNum;
+                slist[row, col] = 16;
+                slist[row, col - 1] = switchNum;
+                squares[switchNum - 1].Move(row, col - 1);
             }
         }
     }
+    
 }
