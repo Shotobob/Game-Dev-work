@@ -4,6 +4,9 @@ public class Square : MonoBehaviour
 {
     public int number = 0;
     [SerializeField] GameObject manager;
+    [SerializeField] GameObject square;
+    [SerializeField] GameObject image;
+    private bool imageSet = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,7 +17,21 @@ public class Square : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            if(imageSet == false)
+            {
+                imageSet = true;
+                //image.transform.Find(nameofimage.SetActive(true));
+                //square.enabled = false;
+            }
+            if(imageSet == true)
+            {
+                imageSet = false;
+                //image.enabled = false;
+                //square.enabled = true;
+            }
+        }
     }
     public void sendNum()
     {

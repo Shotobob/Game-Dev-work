@@ -21,18 +21,22 @@ public class TullyMonster67 : MonoBehaviour
     {
         
         winText.enabled = false;
-        int counter = 0;
-        while(counter != 100)
-        {
-            setNum();
-            move();
-        }
+        randomize();
+        moves = 0;
         
     }
-
+    
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.R) && win == true)
+        {
+            win = false;
+            winText.enabled = false;
+            randomize();
+            moves = 0;
+            switchNum = 0;
+        }
         int wincount = 0;
         moveText.text = "Move: " + moves;
         for(int x = 0; x < slist.GetLength(0); x++)
@@ -51,12 +55,27 @@ public class TullyMonster67 : MonoBehaviour
             winText.enabled = true;
         }
     }
+    public void randomize()
+    {
+        int counter = 0;
+        while(counter != 100000)
+        {        
+            setNum(UnityEngine.Random.Range(1, 16));
+            move();
+            counter++;
+        }
+
+    }
     public void setNum(int num)
     {
         switchNum = num;
     }
     public void move()
     {
+        if(win == true)
+        {
+            return;
+        }
         int row = 0;
         int col = 0;
  
