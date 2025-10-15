@@ -33,8 +33,7 @@ public class TullyMonster67 : MonoBehaviour
     {
         int row = 0;
         int col = 0;
-        int row16 = 0;
-        int col16 = 0;
+ 
         for(int x = 0;x < slist.GetLength(0); x++)
         {
             for(int y = 0;y < slist.GetLength(1); y++)
@@ -47,18 +46,7 @@ public class TullyMonster67 : MonoBehaviour
             
             }
         }
-        for(int x = 0;x < slist.GetLength(0); x++)
-        {
-            for(int y = 0;y < slist.GetLength(1); y++)
-            {
-                if(slist[x, y] == 16)
-                {
-                    row16 = x;
-                    col16 = y;
-                }
-            
-            }
-        }
+
         if(row + 1 < 4 && row + 1 >=0)
         {
             if(slist[row + 1, col] == 16)
@@ -69,7 +57,7 @@ public class TullyMonster67 : MonoBehaviour
 
             }
         }
-        else if (row - 1 < 4 && row - 1 >=0)
+        if (row - 1 < 4 && row - 1 >=0)
         {
             if(slist[row - 1, col] == 16)
             {
@@ -78,7 +66,7 @@ public class TullyMonster67 : MonoBehaviour
                 squares[switchNum - 1].Move(row - 1, col);
             }
         }
-        else if (col - 1 < 4 && col - 1 >=0)
+        if (col - 1 < 4 && col - 1 >=0)
         {
             if(slist[row, col - 1] == 16)
             {
@@ -87,13 +75,13 @@ public class TullyMonster67 : MonoBehaviour
                 squares[switchNum - 1].Move(row, col - 1);
             }
         }
-        else if (col + 1 < 4 && col + 1 >=0)
+        if (col + 1 < 4 && col + 1 >=0)
         {
-            if(slist[row, col - 1] == 16)
+            if(slist[row, col + 1] == 16)
             {
                 slist[row, col] = 16;
-                slist[row, col - 1] = switchNum;
-                squares[switchNum - 1].Move(row, col - 1);
+                slist[row, col + 1] = switchNum;
+                squares[switchNum - 1].Move(row, col + 1);
             }
         }
     }

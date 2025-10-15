@@ -27,9 +27,9 @@ public class Square : MonoBehaviour
     }
     public void Move(int row, int col)
     {
-        float x = row*2.1f;
-        float y = col*2.1f;
+        float x = -7f + col * 2.1f;
+        float y = 3f - row*2.1f;
 
-        transform.position = new Vector3(0, 0, transform.position.z);
+        transform.position = new Vector3(x, y, transform.position.z);
     }
 }
