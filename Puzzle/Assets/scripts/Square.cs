@@ -6,12 +6,13 @@ public class Square : MonoBehaviour
     [SerializeField] GameObject manager;
     [SerializeField] GameObject square;
     [SerializeField] GameObject image;
-    private bool imageSet = false;
+    private bool imageSet = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        image.SetActive(true);
+        square.SetActive(false);
     }
 
     // Update is called once per frame
@@ -22,14 +23,14 @@ public class Square : MonoBehaviour
             if(imageSet == false)
             {
                 imageSet = true;
-                //image.transform.Find(nameofimage.SetActive(true));
-                //square.enabled = false;
+                image.SetActive(true);
+                square.SetActive(false);
             }
-            if(imageSet == true)
+            else if (imageSet == true)
             {
                 imageSet = false;
-                //image.enabled = false;
-                //square.enabled = true;
+                image.SetActive(false);
+                square.SetActive(true);
             }
         }
     }
