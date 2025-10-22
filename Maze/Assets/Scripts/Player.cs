@@ -7,6 +7,12 @@ public class Player : MonoBehaviour
     [SerializeField] float speed;
     bool up, down, left, right;
     Rigidbody2D rb;
+    bool hasRed;
+    bool hasYellow;
+    bool hasGreen;
+    bool hasBlue;
+    bool win;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -48,5 +54,40 @@ public class Player : MonoBehaviour
         if(right)
             dir+= new Vector2(speed*Time.deltaTime,0);
         rb.linearVelocity = dir;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("trigger");
+        if(collision.gameObject.tag.Equals("red"))
+        {
+            collision.gameObject.SetActive(false);
+            hasRed = true;
+        }
+        if(collision.gameObject.tag.Equals("blue"))
+        {
+            collision.gameObject.SetActive(false);
+            hasBlue = true;
+        }
+        if(collision.gameObject.tag.Equals("green"))
+        {
+            collision.gameObject.SetActive(false);
+            hasGreen = true;
+        }
+        if(collision.gameObject.tag.Equals("yellow"))
+        {
+            collision.gameObject.SetActive(false);
+            hasYellow = true;
+        }
+    }
+
+    public void OnCollisionEnter2D(Collider2D collision)
+    {
+        Debug.Log("Collide");
+        if(collision.gameObject.tag.Equals("greendoor") && hasGreen == true)
+        {
+            collision.gameObject.SetActive(false);
+            
+        }
     }
 }
