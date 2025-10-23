@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] int points;
     [SerializeField] float speed;
+    [SerializeField] GameObject manager;
     bool up, down, left, right;
     Rigidbody2D rb;
     bool hasRed;
@@ -79,12 +80,32 @@ public class Player : MonoBehaviour
             collision.gameObject.SetActive(false);
             hasYellow = true;
         }
+        if(collision.gameObject.tag.Equals("star"))
+        {
+            manager.GetComponent<TullyMonster67>().wintime();
+            gameObject.SetActive(false);
+        }
     }
 
-    public void OnCollisionEnter2D(Collider2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Collide");
         if(collision.gameObject.tag.Equals("greendoor") && hasGreen == true)
+        {
+            collision.gameObject.SetActive(false);
+            
+        }
+        if(collision.gameObject.tag.Equals("reddoor") && hasRed == true)
+        {
+            collision.gameObject.SetActive(false);
+            
+        }
+        if(collision.gameObject.tag.Equals("bluedoor") && hasBlue == true)
+        {
+            collision.gameObject.SetActive(false);
+            
+        }
+        if(collision.gameObject.tag.Equals("yellowdoor") && hasYellow == true)
         {
             collision.gameObject.SetActive(false);
             
