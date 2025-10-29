@@ -116,6 +116,11 @@ public class TullyMonster67 : MonoBehaviour
     }
     public void isWin(GameObject c)
     {
+        Rigidbody2D rb = coins[coins.Count - 1].GetComponent<Rigidbody2D>();
+        if(rb.linearVelocityY != 0)
+        {
+            return;
+        }
         int count = 0;
         SpriteRenderer coinrenderer = c.GetComponent<SpriteRenderer>();
         RaycastHit2D[] leftrays = Physics2D.RaycastAll(c.transform.position, Vector2.left, 5f);
@@ -197,6 +202,7 @@ public class TullyMonster67 : MonoBehaviour
             count = 0;
         }
         RaycastHit2D[] downrays = Physics2D.RaycastAll(c.transform.position, Vector2.down, 4f);
+        Debug.DrawRay(coins[coins.Count - 1].transform.position, Vector2.down, Color.red);
         {
             if (downrays.Length > 0 && c.transform.position.y != 4.26f)
             {
@@ -222,6 +228,93 @@ public class TullyMonster67 : MonoBehaviour
         {
             count = 0;
         }
+        Vector2 UR = new Vector2(1,0.75f);
+        
+        RaycastHit2D[] URrays = Physics2D.RaycastAll(c.transform.position, UR, 6.8f);
+        Debug.DrawRay(coins[coins.Count - 1].transform.position, UR, Color.red);
+        {
+            if (URrays.Length > 0 && c.transform.position.y != 4.26f&&c.transform.position.y < -1)
+            {
+                for (int i = 0; i < URrays.Length; i++)
+                {
+                    SpriteRenderer coincheck = URrays[i].collider.GetComponent<SpriteRenderer>();
+                    if (coincheck.color == coinrenderer.color && coincheck != null)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+        }
+        if (count >= 4)
+        {
+            if (coinrenderer.color == Color.red)
+                redwin = true;
+            if (coinrenderer.color == Color.black)
+                blackwin = true;
+        }
+        else
+        {
+            count = 0;
+        }
+        Vector2 UL = new Vector2(-1,0.75f);
+        
+        RaycastHit2D[] ULRays = Physics2D.RaycastAll(c.transform.position, UL, 6.8f);
+        Debug.DrawRay(coins[coins.Count - 1].transform.position, UL, Color.red);
+        {
+            if (ULRays.Length > 0 && c.transform.position.y != 4.26f&&c.transform.position.y < -1)
+            {
+                for (int i = 0; i < ULRays.Length; i++)
+                {
+                    SpriteRenderer coincheck = ULRays[i].collider.GetComponent<SpriteRenderer>();
+                    if (coincheck.color == coinrenderer.color && coincheck != null)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+        }
+        if (count >= 4)
+        {
+            if (coinrenderer.color == Color.red)
+                redwin = true;
+            if (coinrenderer.color == Color.black)
+                blackwin = true;
+        }
+        else
+        {
+            count = 0;
+        }
+        /*Vector2 LR = new Vector2(1, -0.75f);
+        
+        RaycastHit2D[] LRrays = Physics2D.RaycastAll(c.transform.position, LR, 6.8f);
+        Debug.DrawRay(coins[coins.Count - 1].transform.position, LR, Color.red);
+        {
+            if (LRrays.Length > 0 && c.transform.position.y != 4.26f&&c.transform.position.y < -1)
+            {
+                for (int i = 0; i < LRrays.Length; i++)
+                {
+                    SpriteRenderer coincheck = LRrays[i].collider.GetComponent<SpriteRenderer>();
+                    if (coincheck.color == coinrenderer.color && coincheck != null)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+        }
+        if (count >= 4)
+        {
+            if (coinrenderer.color == Color.red)
+                redwin = true;
+            if (coinrenderer.color == Color.black)
+                blackwin = true;
+        }
+        else
+        {
+            count = 0;
+        }*/
     }
     private void correct()
     {
