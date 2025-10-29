@@ -13,12 +13,14 @@ public class TullyMonster67 : MonoBehaviour
     private bool black = true;
     private bool redwin = false;
     private bool blackwin = false;
+    private bool tie = false;
     [SerializeField] Text redwintext;
     [SerializeField] Text blackwintext;
-
+    [SerializeField] Text tietext;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        tietext.enabled = false;
         redwintext.enabled = false;
         blackwintext.enabled = false;
         GameObject o = Instantiate(coin);
@@ -34,6 +36,19 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(redwin == true || blackwin == true || tie == true)
+        {
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                resetgame();
+            }
+        }
+        if (coins.Count >= 42 && placed == true)
+        {
+            tie = true;
+            tietext.enabled = true;
+            return;
+        }
         for (int i = 0; i < coins.Count; i++)
         {
             isWin(coins[i]);
@@ -66,7 +81,7 @@ public class TullyMonster67 : MonoBehaviour
                     if(rays.Length <= 1)
                     {
                         //coins[coins.Count - 1].GetComponent<Collider2D>().enabled = true;
-                        rb.gravityScale = 3f;
+                        rb.gravityScale = 10f;
                         placed = true;
                     }
                 }
@@ -75,12 +90,12 @@ public class TullyMonster67 : MonoBehaviour
 
         }
         
-        if (rb.gravityScale == 3f && placed == true && coins[coins.Count - 1].transform.position.y != 4.26f)
+        if (rb.gravityScale == 10f && placed == true && coins[coins.Count - 1].transform.position.y != 4.26f)
         {
             if(rb.linearVelocityY == 0f)
             {
-                
 
+                rb.bodyType = RigidbodyType2D.Static;
                 GameObject o = Instantiate(coin);
                 Rigidbody2D newrb = o.GetComponent<Rigidbody2D>();
                 SpriteRenderer rb2 = o.GetComponent<SpriteRenderer>();
@@ -98,7 +113,7 @@ public class TullyMonster67 : MonoBehaviour
                 coins.Add(o);
 
                 placed = false;
-
+                
                 for (int i = 0; i < coins.Count; i++)
                 {
                     isWin(coins[i]);
@@ -112,6 +127,29 @@ public class TullyMonster67 : MonoBehaviour
 
 
 
+
+    }
+    private void resetgame()
+    {
+        for(int i = 0; i < coins.Count;i++)
+        {
+            Destroy(coins[i]);
+        }
+        coins.Clear();
+        placed = false;
+        black = true;
+        redwin = false;
+        blackwin = false;
+        tie = false;
+        redwintext.enabled = false;
+        blackwintext.enabled = false;
+        tietext.enabled = false;
+        GameObject o = Instantiate(coin);
+        Rigidbody2D rb = o.GetComponent<Rigidbody2D>();
+        coins.Add(o);
+        rb.gravityScale = 0f;
+        SpriteRenderer rb2 = o.GetComponent<SpriteRenderer>();
+        rb2.color = Color.black;
 
     }
     public void isWin(GameObject c)
@@ -286,40 +324,12 @@ public class TullyMonster67 : MonoBehaviour
         {
             count = 0;
         }
-        /*Vector2 LR = new Vector2(1, -0.75f);
-        
-        RaycastHit2D[] LRrays = Physics2D.RaycastAll(c.transform.position, LR, 6.8f);
-        Debug.DrawRay(coins[coins.Count - 1].transform.position, LR, Color.red);
-        {
-            if (LRrays.Length > 0 && c.transform.position.y != 4.26f&&c.transform.position.y < -1)
-            {
-                for (int i = 0; i < LRrays.Length; i++)
-                {
-                    SpriteRenderer coincheck = LRrays[i].collider.GetComponent<SpriteRenderer>();
-                    if (coincheck.color == coinrenderer.color && coincheck != null)
-                    {
-                        count++;
-                    }
-                }
-            }
-
-        }
-        if (count >= 4)
-        {
-            if (coinrenderer.color == Color.red)
-                redwin = true;
-            if (coinrenderer.color == Color.black)
-                blackwin = true;
-        }
-        else
-        {
-            count = 0;
-        }*/
+       
     }
     private void correct()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(mousePos.x >= -7 && mousePos.x <= -4.8)
+        if(mousePos.x <= -4.8)
         {
             coins[coins.Count - 1].transform.position = new Vector2(-5.4f, 4.26f);
         }
@@ -343,7 +353,7 @@ public class TullyMonster67 : MonoBehaviour
         {
             coins[coins.Count - 1].transform.position = new Vector2(3.6f, 4.26f);
         }
-        if (mousePos.x >= 4.2 && mousePos.x <= 6.2)
+        if (mousePos.x >= 4.2)
         {
             coins[coins.Count - 1].transform.position = new Vector2(5.4f, 4.26f);
         }
