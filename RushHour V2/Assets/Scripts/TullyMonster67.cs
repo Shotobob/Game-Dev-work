@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TullyMonster67 : MonoBehaviour
 {
     [SerializeField] Text scoreText;
-    private int moves = 0;
+    private float moves = 0f;
     [SerializeField] Text winText;
     private bool win = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,7 +19,12 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Move: " + moves;
+        if(win == false)
+        {
+            moves += Time.deltaTime;
+            scoreText.text = "Time: " + (int)moves;
+        }
+        
         
     }
     public void addMove()
