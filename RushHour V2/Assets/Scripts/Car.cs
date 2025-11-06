@@ -26,7 +26,7 @@ public class Car : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.freezeRotation = true;
-        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.bodyType = RigidbodyType2D.Static;
         end = false;
         //manager.GetComponent<TullyMonster67>().setWin(false);
         ogx = transform.position.x;
@@ -78,6 +78,7 @@ public class Car : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        rb.bodyType = RigidbodyType2D.Dynamic;
         if (manager.GetComponent<TullyMonster67>().isWin() == false)
         {
             dragging = true;
@@ -86,7 +87,7 @@ public class Car : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        
+        rb.bodyType = RigidbodyType2D.Static;
         dragging = false;
         
 
@@ -105,9 +106,5 @@ public class Car : MonoBehaviour
         }
         
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        dragging = false;
-        //rb.constraints = RigidbodyConstraints2D.FreezePosition;
-    }
+    
 }
