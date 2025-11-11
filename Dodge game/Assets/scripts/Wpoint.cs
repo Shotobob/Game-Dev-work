@@ -28,4 +28,14 @@ public class Wpoint : MonoBehaviour
         if(Mathf.Abs(transform.position.x - list[currentWP].transform.position.x) < .1 && Mathf.Abs(transform.position.y - list[currentWP].transform.position.y) < .1)
             currentWP = (currentWP + 1) % list.Count;
     }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("trigger");
+        if (collision.gameObject.tag.Equals("shield"))
+        {
+            
+            gameObject.SetActive(false);
+        }
+
+    }
 }
