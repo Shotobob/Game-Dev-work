@@ -102,7 +102,8 @@ public class squaremove : MonoBehaviour
             dir+= new Vector2(0, -speed*Time.deltaTime);
         if(right)
             dir+= new Vector2(speed*Time.deltaTime,0);
-        rb.linearVelocity = dir;
+    
+        rb.linearVelocity = Vector2.ClampMagnitude(dir, 10f);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
