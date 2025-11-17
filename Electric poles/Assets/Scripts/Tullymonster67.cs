@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class Tullymonster67 : MonoBehaviour
 {
-
+    [SerializeField] GameObject LightningDeath;
+    [SerializeField] GameObject LP;
+    [SerializeField] GameObject DP;
+    [SerializeField] GameObject MP;
     [SerializeField] List<Pole> poles;
     public int selectedPole = -1;
     [SerializeField] Text death;
@@ -16,6 +19,7 @@ public class Tullymonster67 : MonoBehaviour
     void Start()
     {
         death.enabled = false;
+        LightningDeath.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -80,7 +84,26 @@ public class Tullymonster67 : MonoBehaviour
                     }
                     else
                     {
+                        poles[pole].getLights()[0].GetComponent<SpriteRenderer>().enabled = false;
+                        poles[selectedPole].getLights()[0].GetComponent<SpriteRenderer>().enabled = false;
                         death.enabled = true;
+                        LightningDeath.GetComponent<SpriteRenderer>().enabled = true;
+                        if (pole == 0)
+                        {
+                            x = -6.5;
+
+                        }
+                        if (pole == 1)
+                        {
+                            x = 0;
+
+                        }
+                        if (pole == 2)
+                        {
+                            x = 6.5;
+                        }
+                        LightningDeath.transform.position = new Vector3((float)x, transform.position.y, transform.position.z);
+                        
                     }
 
                 }
@@ -92,5 +115,15 @@ public class Tullymonster67 : MonoBehaviour
         }
 
         
+    }
+    public void change()
+    {
+        if(LP.GetComponent<SpriteRenderer>().enabled == false)
+        {
+            LP.GetComponent<SpriteRenderer>().enabled == true
+        }
+        else{
+            LP.GetComponent<SpriteRenderer>().enabled == false;
+        }
     }
 }
