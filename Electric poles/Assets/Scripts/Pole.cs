@@ -46,5 +46,9 @@ public class Pole : MonoBehaviour
     {
         return selected;
     }
+    public Vector3 getPos()
+    {
+        return transform.position;
+    }
 
 }

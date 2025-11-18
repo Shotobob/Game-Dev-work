@@ -10,22 +10,61 @@ public class Tullymonster67 : MonoBehaviour
     [SerializeField] GameObject DP;
     [SerializeField] GameObject MP;
     [SerializeField] List<Pole> poles;
+    [SerializeField] Pole OGpoles;
     public int selectedPole = -1;
     [SerializeField] Text death;
     [SerializeField] Text win;
+    [SerializeField] AudioSource MoveLightning;
+    [SerializeField] AudioSource Deathhhhh;
+    [SerializeField] AudioSource select;
     public int movesNum = 0;
     public bool end = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         death.enabled = false;
+        win.enabled = false;
         LightningDeath.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (poles[2].getLights().Count == 4)
+        {
+            end = true;
+            win.enabled = true;
+
+        }
+        if (Input.GetKeyDown(KeyCode.R) && end == true)
+        {
+            DP.GetComponent<SpriteRenderer>().sortingOrder = -3;
+            death.enabled = false;
+            win.enabled = false;
+            LightningDeath.GetComponent<SpriteRenderer>().enabled = false;
+            
+           
+            end = false;
+            win.enabled = false;
+            selectedPole = -1;
+            foreach (Pole p in poles)
+            {
+                foreach (Light l in p.getLights())
+                {
+                    l.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                p.getLights().Clear();
+            }
+            List<Light> original = OGpoles.getLights();
+            for (int i = 3; i >= 0; i--)
+            {
+                original[i].moveOG();       
+                poles[0].addLights(original[i]); 
+            }
+
+
+        }
     }
     public void poleClicked(int pole)
     {
@@ -37,18 +76,24 @@ public class Tullymonster67 : MonoBehaviour
             {
                 selectedPole = pole;
                 poles[pole].setSelected(true);
-                //poles[pole].setColor();
+                LP.transform.position = poles[pole].getPos();
+                LP.GetComponent<SpriteRenderer>().enabled = true;
+                select.Play();
             }
             else if (selectedPole == pole)
             {
                 selectedPole = -1;
                 poles[pole].setSelected(false);
-                //poles[pole].setColor();
+                LP.transform.position = poles[pole].getPos();
+                LP.GetComponent<SpriteRenderer>().enabled = false ;
+                select.Play();
             }
             else
             {
                 poles[selectedPole].setSelected(false);
-                //poles[selectedPole].setColor();
+                LP.transform.position = poles[pole].getPos();
+                LP.GetComponent<SpriteRenderer>().enabled = false;
+                select.Play();
 
                 if (poles[selectedPole].getLights().Count != 0)
                 {
@@ -79,7 +124,7 @@ public class Tullymonster67 : MonoBehaviour
                         }
                         poles[pole].addLights(poles[selectedPole].getLights()[0]);
                         poles[selectedPole].removeLights();
-                        movesNum++;
+                        MoveLightning.Play();
 
                     }
                     else
@@ -103,6 +148,10 @@ public class Tullymonster67 : MonoBehaviour
                             x = 6.5;
                         }
                         LightningDeath.transform.position = new Vector3((float)x, transform.position.y, transform.position.z);
+                        Deathhhhh.Play();
+                        DP.transform.position = new Vector3((float)x, transform.position.y, transform.position.z);
+                        DP.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        end = true;
                         
                     }
 
@@ -120,10 +169,10 @@ public class Tullymonster67 : MonoBehaviour
     {
         if(LP.GetComponent<SpriteRenderer>().enabled == false)
         {
-            LP.GetComponent<SpriteRenderer>().enabled == true
+            LP.GetComponent<SpriteRenderer>().enabled = true;
         }
         else{
-            LP.GetComponent<SpriteRenderer>().enabled == false;
+            LP.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 }
