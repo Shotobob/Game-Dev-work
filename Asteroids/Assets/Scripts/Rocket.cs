@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    [SerializeField] float speed;
     [SerializeField] GameObject manager;
     [SerializeField] GameObject Bullet;
     bool up, down, left, right;
+    [SerializeField] AudioSource bsound;
     Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,36 +17,38 @@ public class Rocket : MonoBehaviour
     void Update()
     {
         if(Input.GetKey(KeyCode.W))
-            up = true;
+            rb.AddForce(transform.right);
         if(Input.GetKey(KeyCode.A))
             transform.Rotate(0, 0, 1);
         if(Input.GetKey(KeyCode.S))
-            down = true;
+            rb.AddForce(-transform.right);
         if(Input.GetKey(KeyCode.D))
             transform.Rotate(0, 0, -1);
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject b = Instantiate(Bullet, transform.position + transform.up*1.5f, transform.rotation);
-            b.GetComponent<Rigidbody2D>().linearVelocity = b.transform.up *.5f;
+            GameObject b = Instantiate(Bullet, transform.position + transform.right*1.5f, transform.rotation);
+            b.GetComponent<Rigidbody2D>().linearVelocity = b.transform.right *5f;
+            bsound.Play();
+        }
+        if(transform.position.x > 9f)
+        {
+            transform.position = new Vector3(transform.position.x - 18f, transform.position.y, transform.position.y);
+        }
+        if(transform.position.x < -9f)
+        {
+            transform.position= new Vector3(transform.position.x + 18f, transform.position.y, transform.position.y);
+        }
+        if(transform.position.y > 5f)
+        {
+            transform.position = new Vector3(transform.position.x , transform.position.y - 10f, transform.position.y);
+        }
+        if(transform.position.y < -5f)
+        {
+            transform.position= new Vector3(transform.position.x , transform.position.y + 10f, transform.position.y);
         }
 
         
         
     }
-    private void FixedUpdate()
-    {
-        Vector2 dir = Vector2.zero;
-
-        if(up)
-            dir+= new Vector2(0, speed*Time.deltaTime);
-            up = false;
-        if(left)
-            dir+= new Vector2(-speed*Time.deltaTime,0);
-        if(down)
-            dir+= new Vector2(0, -speed*Time.deltaTime);
-            down = false;
-        if(right)
-            dir+= new Vector2(speed*Time.deltaTime,0);
-        rb.linearVelocity = dir;
-    }
+ 
 }
