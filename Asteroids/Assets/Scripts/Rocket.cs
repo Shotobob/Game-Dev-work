@@ -49,9 +49,11 @@ public class Rocket : MonoBehaviour
             GameObject b = Instantiate(Bullet, transform.position + transform.right*1.5f, transform.rotation);
             b.GetComponent<Rigidbody2D>().linearVelocity = b.transform.right *5f;
             bsound.Play();
-            flash.GetComponent<SpriteRenderer>().enabled = true;
+            
+            GameObject f = Instantiate(flash, transform.position + transform.right*0.6f, transform.rotation);
+            Destroy(f, .1f);
         }
-        flash.GetComponent<SpriteRenderer>().enabled = false;
+
         if(transform.position.x > 9f)
         {
             transform.position = new Vector3(transform.position.x - 18f, transform.position.y, transform.position.y);
@@ -70,6 +72,16 @@ public class Rocket : MonoBehaviour
         }
 
         
+        
+    }
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collide");
+        if(collision.gameObject.tag.Equals("a") && hasGreen == true)
+        {
+            collision.gameObject.SetActive(false);
+            
+        }
         
     }
  
