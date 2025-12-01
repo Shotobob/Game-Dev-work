@@ -30,4 +30,6 @@ public class Bullet : MonoBehaviour
             transform.position= new Vector3(transform.position.x , transform.position.y + 10f, transform.position.y);
         }
     }
+
+    
 }

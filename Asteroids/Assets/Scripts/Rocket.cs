@@ -77,9 +77,9 @@ public class Rocket : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Collide");
-        if(collision.gameObject.tag.Equals("a") && hasGreen == true)
+        if(collision.gameObject.tag.Equals("a"))
         {
-            collision.gameObject.SetActive(false);
+            transform.position= new Vector3(0 , 0, transform.position.z);
             
         }
         
