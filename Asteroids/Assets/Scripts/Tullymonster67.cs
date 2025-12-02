@@ -1,12 +1,14 @@
-using System;
+
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class Tullymonster67 : MonoBehaviour
 {
     [SerializeField] GameObject skull1;
     [SerializeField] GameObject skull2;
     [SerializeField] GameObject skull3;
+    [SerializeField] GameObject Asteroids;
     private int count = 0;
     public bool end = false;
     private int score = 0;
@@ -41,5 +43,34 @@ public class Tullymonster67 : MonoBehaviour
     {
         score += points;
         scoreText.text = "Score: " + score;
+    }
+    public void spawna()
+    {
+        int place = Random.Range(0, 4);
+        if(place == 0)
+        {
+            float x = Random.Range(-9f, 9f);
+            Vector2 v = new Vector2(x, 5);
+            GameObject a = Instantiate(Asteroids, v, transform.rotation);
+        }
+        if(place == 1)
+        {
+            float x = Random.Range(-9f, 9f);
+            Vector2 v = new Vector2(x, 5);
+            GameObject a = Instantiate(Asteroids, v, transform.rotation);
+        }
+        if(place == 2)
+        {
+            float x = Random.Range(-5f, 5f);
+            Vector2 v = new Vector2(x, 5);
+            GameObject a = Instantiate(Asteroids, v, transform.rotation);
+        }
+        if(place == 3)
+        {
+            float x = Random.Range(-9f, 9f);
+            Vector2 v = new Vector2(x, 5);
+            GameObject a = Instantiate(Asteroids, v, transform.rotation);
+        }
+
     }
 }

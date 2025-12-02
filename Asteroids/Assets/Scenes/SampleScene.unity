@@ -436,6 +436,7 @@ MonoBehaviour:
   skull1: {fileID: 713495141}
   skull2: {fileID: 960173435}
   skull3: {fileID: 2027198243}
+  Asteroids: {fileID: 0}
   end: 0
   scoreText: {fileID: 819890962}
 --- !u!4 &341049204
@@ -2300,11 +2301,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1653130763397781469, guid: 7eded6f9c13162b40828d39f39e74245, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.18
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1653130763397781469, guid: 7eded6f9c13162b40828d39f39e74245, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.37
+      value: -9.14
       objectReference: {fileID: 0}
     - target: {fileID: 1653130763397781469, guid: 7eded6f9c13162b40828d39f39e74245, type: 3}
       propertyPath: m_LocalPosition.z
