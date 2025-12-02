@@ -15,19 +15,19 @@ public class Bullet : MonoBehaviour
     {
         if(transform.position.x > 9f)
         {
-            transform.position = new Vector3(transform.position.x - 18f, transform.position.y, transform.position.y);
+            transform.position = new Vector3(transform.position.x - 18f, transform.position.y, transform.position.z);
         }
         if(transform.position.x < -9f)
         {
-            transform.position= new Vector3(transform.position.x + 18f, transform.position.y, transform.position.y);
+            transform.position= new Vector3(transform.position.x + 18f, transform.position.y, transform.position.z);
         }
         if(transform.position.y > 5f)
         {
-            transform.position = new Vector3(transform.position.x , transform.position.y - 10f, transform.position.y);
+            transform.position = new Vector3(transform.position.x , transform.position.y - 10f, transform.position.z);
         }
         if(transform.position.y < -5f)
         {
-            transform.position= new Vector3(transform.position.x , transform.position.y + 10f, transform.position.y);
+            transform.position= new Vector3(transform.position.x , transform.position.y + 10f, transform.position.z);
         }
     }
 
