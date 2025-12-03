@@ -183,6 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
-  hp: 1
   small: {fileID: 0}
   explo: {fileID: 1374404678026287337, guid: 73d1785b57075b4499952360d86513d6, type: 3}
+  spawnedFromPrefab: 0
