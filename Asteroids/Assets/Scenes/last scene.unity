@@ -974,7 +974,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.15
+  m_Mass: 0.3
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -2497,6 +2497,14 @@ PrefabInstance:
       value: medium explosion1_0
       objectReference: {fileID: 0}
     - target: {fileID: 4628446010811709722, guid: cb85e64a246bc0e44a22541b4f90b71e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4628446010811709722, guid: cb85e64a246bc0e44a22541b4f90b71e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4628446010811709722, guid: cb85e64a246bc0e44a22541b4f90b71e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.671054
       objectReference: {fileID: 0}
@@ -2615,6 +2623,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2868005362284283079, guid: 50f02d0f49888d342a74e16515ecc495, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2868005362284283079, guid: 50f02d0f49888d342a74e16515ecc495, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2868005362284283079, guid: 50f02d0f49888d342a74e16515ecc495, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.171602
       objectReference: {fileID: 0}
@@ -2677,11 +2693,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1653130763397781469, guid: 7eded6f9c13162b40828d39f39e74245, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1653130763397781469, guid: 7eded6f9c13162b40828d39f39e74245, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1653130763397781469, guid: 7eded6f9c13162b40828d39f39e74245, type: 3}
       propertyPath: m_LocalPosition.x
