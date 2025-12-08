@@ -6,25 +6,91 @@ public class TullyMonster67 : MonoBehaviour
     bool left, right;
     [SerializeField] float jumpforce;
     [SerializeField] float speed;
+    Animator Animator;
+    SpriteRenderer spriteRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-            left = true;
-        if(Input.GetKeyDown(KeyCode.D))
-            right = true;
-        if(Input.GetKeyUp(KeyCode.A))
-            left = false;
-        if(Input.GetKeyUp(KeyCode.D))
-            right = false;
-        if(Input.GetKeyDown(KeyCode.Space) == true && isGrounded() == true)
+        float moving = 0;
+        if (Input.GetKey(KeyCode.S) && isGrounded() == true)
+        {
+            Animator.SetInteger("State", 4);
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Space) == true && isGrounded() == true)
+        {
             rb.linearVelocity = (new Vector2(rb.linearVelocity.x, jumpforce));
+            Animator.SetInteger("State", 2);
+            return;
+        }
+        if (rb.linearVelocityY > 0.1f && isGrounded() == false)
+        {
+            Animator.SetInteger("State", 2);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            left = true;
+            spriteRenderer.flipX = true;
+            //Animator.SetInteger("State", 1);
+            
+        }
+        if(Input.GetKeyUp(KeyCode.A))
+        {
+            left = false;
+        }
+            
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            right = true;
+            spriteRenderer.flipX = false;
+            //Animator.SetInteger("State", 1);
+
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            right = false;
+        }
+        
+
+        float h = 0f;
+        if (left)
+        {
+            h -= speed;
+            moving = 1;
+        }
+        if (right)
+        {
+            h += speed;
+            moving = 1;
+        }
+        rb.linearVelocity = new Vector2(h, rb.linearVelocity.y);
+        
+        
+        if (rb.linearVelocityY < -0.1f && isGrounded() == false)
+        {
+            Animator.SetInteger("State", 3);
+        }
+        
+
+        if (moving != 0 && isGrounded())
+        {
+            Animator.SetInteger("State", 1);
+        }
+        
+        else if(isGrounded())
+        {
+            Animator.SetInteger("State", 0);
+        }
+        
+
     }
     public bool isGrounded()
     {
@@ -36,13 +102,5 @@ public class TullyMonster67 : MonoBehaviour
             ig = true;
         return ig;
     }
-    public void FixedUpdate()
-    {
-        float h = 0f;
-        if(left)
-            h -= speed;
-        if(right)
-            h += speed;
-        rb.linearVelocity = new Vector2(h, rb.linearVelocity.y);
-    }
+   
 }
