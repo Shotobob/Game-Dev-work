@@ -14,15 +14,23 @@ public class Pieces : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        black.GetComponent<SpriteRenderer>().sortingOrder= 3;
-        white.GetComponent<SpriteRenderer>().sortingOrder= 0;
+        //black.GetComponent<SpriteRenderer>().sortingOrder= 3;
+        //white.GetComponent<SpriteRenderer>().sortingOrder= 0;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    public void setblack()
+    {
+        isblack = true;
+    }
+    public void setwhite()
+    {
+        isblack = false;
     }
     public void flip()
     {
