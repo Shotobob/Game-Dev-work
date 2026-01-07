@@ -10,7 +10,7 @@ public class Pieces : MonoBehaviour
      [SerializeField] GameObject black;
      [SerializeField] GameObject white;
 
-    private bool isblack = true;
+    private bool isblack = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

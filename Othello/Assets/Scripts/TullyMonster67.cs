@@ -18,7 +18,7 @@ public class TullyMonster67 : MonoBehaviour
         pieces.Add(o);
         o.transform.position = new Vector2(0.51f, 0.51f);
         o.GetComponent<Pieces>().flip();
-        o.GetComponent<Pieces>().setwhite();
+        o.GetComponent<Pieces>().setblack();
 
         GameObject o2 = Instantiate(piece);
         pieces.Add(o2);
@@ -28,17 +28,17 @@ public class TullyMonster67 : MonoBehaviour
         GameObject o3 = Instantiate(piece);
         pieces.Add(o3);
         o3.transform.position = new Vector2(0.51f, -0.51f);
-        //o.GetComponent<Pieces>().flip();
+        //o3.GetComponent<Pieces>().flip();
         
         GameObject o4 = Instantiate(piece);
         pieces.Add(o4);
         o4.transform.position = new Vector2(-0.51f, -0.51f);
         o4.GetComponent<Pieces>().flip();
-        o4.GetComponent<Pieces>().setwhite();
+        o4.GetComponent<Pieces>().setblack();
         
         GameObject o5 = Instantiate(piece);
         pieces.Add(o5);
-        //o.GetComponent<Pieces>().flip();
+        o5.GetComponent<Pieces>().flip();
         
 
 
