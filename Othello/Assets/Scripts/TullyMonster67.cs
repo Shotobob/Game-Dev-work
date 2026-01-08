@@ -46,10 +46,30 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject current = Instantiate(piece);
+        int color = 0;
+        if(color%2 != 0)
+        {
+            current.GetComponent<Pieces>().flip();
+        }
         if(placed == false)
         {
             move();
         }
+        while(placed == false)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            
+            
+            
+            pieces.Add(current);
+            color++;
+            
+        }
+        }
+        
+
         
        
     }
