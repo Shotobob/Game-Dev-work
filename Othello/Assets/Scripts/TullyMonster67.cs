@@ -10,6 +10,7 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] GameObject piece;
     private List<GameObject> pieces = new List<GameObject>();
     private bool placed = false;
+    private int color = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,37 +41,35 @@ public class TullyMonster67 : MonoBehaviour
         pieces.Add(o5);
         o5.GetComponent<Pieces>().flip();
         
+        
+       
 
 
     }
     // Update is called once per frame
     void Update()
     {
-        GameObject current = Instantiate(piece);
-        int color = 0;
-        if(color%2 != 0)
-        {
-            current.GetComponent<Pieces>().flip();
-        }
+        
+        
+
         if(placed == false)
         {
             move();
-        }
-        while(placed == false)
-        {
             if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            
-            
-            
-            pieces.Add(current);
-            color++;
-            
+            {
+                placed = true;
+                
+                GameObject current = Instantiate(piece);
+                pieces.Add(current);
+               
+                if(color%2 != 0)
+                {
+                    current.GetComponent<Pieces>().flip();
+                }
+                color++;
+            }
         }
-        }
-        
-
-        
+        placed = false;
        
     }
     public void move()
