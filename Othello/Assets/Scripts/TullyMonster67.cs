@@ -11,6 +11,8 @@ public class TullyMonster67 : MonoBehaviour
     private List<GameObject> pieces = new List<GameObject>();
     private bool placed = false;
     private int color = 0;
+    private float[] xvalues = {-0.51f, 0.51f, 1.56f, -1.56f, 2.61f, -2.61f,3.66f, -3.66f}
+    private float[] yvalues = {-0.51f, 0.51f, 1.56f, -1.56f, 2.61f, -2.61f,3.66f, -3.66f}
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -77,5 +79,27 @@ public class TullyMonster67 : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pieces[pieces.Count - 1].transform.position = new Vector2(mousePos.x, mousePos.y);
 
+    }
+    public void correct()
+    {
+        float current = 0f;
+        float yat = 0;
+        float xat = 0;
+        for(int x = 0; x < xvalues.Length; x++)
+        {
+            float diff = Math.abs(xvalues[x]) - Math.abs(transform.position.x);
+            if(diff<current)
+            {
+                current = diff;
+                yat = xvalues[x];
+            }
+            diff = Math.abs(yvalues[x]) - Math.abs(transform.position.y);
+            if(diff<current)
+            {
+                current = diff;
+                xat = yvalues[x];
+            }
+             pieces[pieces.Count - 1].transform.position = new Vector2(xat, yat);
+        }
     }
 }
