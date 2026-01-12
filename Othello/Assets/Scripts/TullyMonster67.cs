@@ -16,6 +16,7 @@ public class TullyMonster67 : MonoBehaviour
     private float[] yvalues = { -3.66f, -2.61f, -1.56f ,- 0.51f, 0.51f, 1.56f, 2.61f, 3.66f };
     public GameObject current;
     private int[,] board = new int[8, 8];
+    private bool legal = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -53,32 +54,54 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector2 position = current.transform.position;
+        float closest = 1000000000000000000;
+        int xind = 0;
+        for (int x = 0; x < xvalues.Length; x++)
+        {
+            float at = Mathf.Abs(position.x - xvalues[x]);
+            if (at < closest)
+            {
+                closest = at;
+                xind = x;
+            }
+        }
+        closest = 1000000000000000000;
+        int yind = 0;            
+        for (int y = 0; y < yvalues.Length; y++)
+        {
+            float at = Mathf.Abs(position.y - yvalues[y]);
+            if (at < closest)
+            {
+                closest = at;
+                yind = y;
+            }
+        }
         move();
         if (placed == false)
         {
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                placed = true;
-                correct();
                 
-                current = Instantiate(piece);
-                pieces.Add(current);
-
-                if (color % 2 == 0)
+                correct();
+                if(board[xind, yind] != 1 && board[xind, yind] != 2)
                 {
-                    current.GetComponent<Pieces>().setwhite();
+                    placed = true;
+                    current = Instantiate(piece);
+                    pieces.Add(current);
+                    if (color % 2 == 0)
+                    {
+                        current.GetComponent<Pieces>().setwhite();
+                    }
+                    else
+                    {
+                        current.GetComponent<Pieces>().setblack();
+                    }
+                    color++;
+                    makeboard();
+                    PrintBoard();
                 }
-                else
-                {
-                    current.GetComponent<Pieces>().setblack();
-                }
-                color++;
-                makeboard();
-                PrintBoard();
-
-
-
             }
         }
     }
