@@ -27,25 +27,48 @@ public class Pieces : MonoBehaviour
     public void setblack()
     {
         isblack = true;
+        change();
     }
     public void setwhite()
     {
         isblack = false;
+        change();
+    }
+    public bool isWhite()
+    {
+       if(isblack == false)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool isBlack()
+    {
+        if (isblack == true)
+        {
+            return true;
+        }
+        return false;
     }
     public void flip()
     {
-        if(isblack == true)
+        isblack = !isblack;
+        change();
+    }
+    public void change()
+    {
+        if (isblack == false)
         {
-            black.GetComponent<SpriteRenderer>().sortingOrder= 0;
-            white.GetComponent<SpriteRenderer>().sortingOrder= 3;
+            black.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            white.GetComponent<SpriteRenderer>().sortingOrder = 3;
 
-            
-        }
-        else{
-            black.GetComponent<SpriteRenderer>().sortingOrder= 3;
-            white.GetComponent<SpriteRenderer>().sortingOrder= 0;
 
         }
-        
+        else
+        {
+            black.GetComponent<SpriteRenderer>().sortingOrder = 3;
+            white.GetComponent<SpriteRenderer>().sortingOrder = 0;
+
+        }
     }
 }
