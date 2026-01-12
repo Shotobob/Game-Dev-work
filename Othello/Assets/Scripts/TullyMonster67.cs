@@ -13,7 +13,7 @@ public class TullyMonster67 : MonoBehaviour
     private bool placed = false;
     private int color = 0;
     private float[] xvalues = { -3.66f, -2.61f, -1.56f, -0.51f, 0.51f, 1.56f, 2.61f, 3.66f };
-    private float[] yvalues = { -3.66f, -2.61f, -1.56f ,- 0.51f, 0.51f, 1.56f, 2.61f, 3.66f };
+    private float[] yvalues = { -3.66f, -2.61f, -1.56f ,-0.51f, 0.51f, 1.56f, 2.61f, 3.66f };
     public GameObject current;
     private int[,] board = new int[8, 8];
     private bool legal = false;
@@ -45,46 +45,48 @@ public class TullyMonster67 : MonoBehaviour
         current = Instantiate(piece);
         pieces.Add(current);
         current.GetComponent<Pieces>().setblack();
-        
-        
-       
 
+
+
+        makeboard();
+        PrintBoard();
 
     }
     // Update is called once per frame
     void Update()
     {
-        Vector2 position = current.transform.position;
-        float closest = 1000000000000000000;
-        int xind = 0;
-        for (int x = 0; x < xvalues.Length; x++)
-        {
-            float at = Mathf.Abs(position.x - xvalues[x]);
-            if (at < closest)
-            {
-                closest = at;
-                xind = x;
-            }
-        }
-        closest = 1000000000000000000;
-        int yind = 0;            
-        for (int y = 0; y < yvalues.Length; y++)
-        {
-            float at = Mathf.Abs(position.y - yvalues[y]);
-            if (at < closest)
-            {
-                closest = at;
-                yind = y;
-            }
-        }
+        
         move();
         if (placed == false)
         {
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                
                 correct();
+                Vector2 position = current.transform.position;
+                float closest = 1000000000000000000;
+                int xind = 0;
+                for (int x = 0; x < xvalues.Length; x++)
+                {
+                    float at = Mathf.Abs(position.x - xvalues[x]);
+                    if (at < closest)
+                    {
+                        closest = at;
+                        xind = x;
+                    }
+                }
+                closest = 1000000000000000000;
+                int yind = 0;
+                for (int y = 0; y < yvalues.Length; y++)
+                {
+                    float at = Mathf.Abs(position.y - yvalues[y]);
+                    if (at < closest)
+                    {
+                        closest = at;
+                        yind = y;
+                    }
+                }
+                
                 if(board[xind, yind] != 1 && board[xind, yind] != 2)
                 {
                     placed = true;
@@ -133,37 +135,41 @@ public class TullyMonster67 : MonoBehaviour
         }
         for(int i = 0;i < pieces.Count; i++)
         {
-            GameObject piece = pieces[i];
-            Vector2 position = piece.transform.position;
+
+            GameObject p = pieces[i];
+            Vector2 position = p.transform.position;
             closest = 1000000000000000000;
-            xind = 0;
-            for (int x = 0; x < xvalues.Length; x++)
+            if(position.x < 4 &&  position.y < 4 && position.x > -4 && position.y > -4)
             {
-                float at = Mathf.Abs(position.x - xvalues[x]);
-                if (at < closest)
+                xind = 0;
+                for (int x = 0; x < xvalues.Length; x++)
                 {
-                    closest = at;
-                    xind = x;
+                    float at = Mathf.Abs(position.x - xvalues[x]);
+                    if (at < closest)
+                    {
+                        closest = at;
+                        xind = x;
+                    }
                 }
-            }
-            closest = 1000000000000000000;
-            yind = 0;            
-            for (int y = 0; y < yvalues.Length; y++)
-            {
-                float at = Mathf.Abs(position.y - yvalues[y]);
-                if (at < closest)
+                closest = 1000000000000000000;
+                yind = 0;
+                for (int y = 0; y < yvalues.Length; y++)
                 {
-                    closest = at;
-                    yind = y;
+                    float at = Mathf.Abs(position.y - yvalues[y]);
+                    if (at < closest)
+                    {
+                        closest = at;
+                        yind = y;
+                    }
                 }
-            }
-            if (piece.GetComponent<Pieces>().isBlack())
-            {
-                board[xind, yind] = 1;
-            }
-            if (piece.GetComponent<Pieces>().isWhite())
-            {
-                board[xind, yind] = 2;
+                if (p.GetComponent<Pieces>().isBlack())
+                {
+                    board[xind, yind] = 1;
+                }
+                if (p.GetComponent<Pieces>().isWhite())
+                {
+                    board[xind, yind] = 2;
+                }
             }
         }
         placed = false;
@@ -173,7 +179,7 @@ public class TullyMonster67 : MonoBehaviour
     public void move()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        pieces[pieces.Count - 1].transform.position = new Vector2(mousePos.x, mousePos.y);
+        current.transform.position = new Vector2(mousePos.x, mousePos.y);
 
     }
     
