@@ -107,10 +107,71 @@ public class TullyMonster67 : MonoBehaviour
             }
         }
     }
+    public void Check360(int xind, int yind)
+    {
+        int counter = 0;
+        bool cont = true;
+        int place = 1;
+        int color = board[xind, yind];
+        if(xind + 1 <= 7 && xind - 1 >= 0 && yind >= 0 && yind <= 7)
+        {
+            if(board[xind+1, yind] != color && board[xind+1, yind] != 0)
+            {
+                counter++;
+                place++;
+                /*while(cont)
+                {
+                    if(board[xind+place, yind] == color)
+                    {
+                        cont = false;
+                    }
+                    else if(board[xind+place, yind] == 0){
+                        counter = 0;
+                        place = 1;
+                        cont = false;
+                    }
+                    else{
+                        counter++;
+                        place++;
+                    }
+                }*/
+
+
+            }
+            /*if(board[xind+1, yind+1] == color)
+            {
+
+            }
+            if(board[xind, yind+1] == color)
+            {
+
+            }
+            if(board[xind-1, yind+1] == color)
+            {
+
+            }
+            if(board[xind-1, yind] == color)
+            {
+
+            }
+            if(board[xind-1, yind-1] == color)
+            {
+
+            }
+            if(board[xind, yind-1] == color)
+            {
+
+            }
+            if(board[xind+1, yind-1] == color)
+            {
+
+            }*/
+        } 
+    }
     public void PrintBoard()
     {
         string s = "";
-        for (int y = 7; y >= 0; y--) // top row first
+        for (int y = 7; y >= 0; y--) 
         {
             for (int x = 0; x < 8; x++)
             {
