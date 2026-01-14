@@ -91,16 +91,15 @@ public class TullyMonster67 : MonoBehaviour
                 if (board[xind, yind] != 1 && board[xind, yind] != 2)
                 {
                     correct();
-                    //makeboard();
-                    int currentColor = (color % 2 == 0) ? 2 : 1;
-                    board[xind, yind] = currentColor;
-                    Check360(xind, yind, currentColor);
+                    makeboard();
+                    Check360(xind, yind);
                     if(legal == true)
                     {
                         placed = true;
-                        makeboard();
+                        
                         current = Instantiate(piece);
                         pieces.Add(current);
+                        placed = false;
                         if (color % 2 == 0)
                         {
                             current.GetComponent<Pieces>().setwhite();
@@ -110,21 +109,22 @@ public class TullyMonster67 : MonoBehaviour
                             current.GetComponent<Pieces>().setblack();
                         }
                         color++;
-                        
+                        //makeboard();
                         PrintBoard();
+
                     }
                     
                 }
             }
         }
     }
-    public void Check360(int xind, int yind, int currentColor)
+    public void Check360(int xind, int yind)
     {
         legal = false;
         int counter = 0;
         bool cont = true;
         int place = 1;
-        int color = currentColor;
+        int color = board[xind, yind];
         int enemy = (color == 1) ? 2 : 1;
         counter = 0;
         place = 1;
@@ -578,7 +578,7 @@ public class TullyMonster67 : MonoBehaviour
                 }
             }
         }
-        //placed = false;
+        placed = false;
     }
     
     
