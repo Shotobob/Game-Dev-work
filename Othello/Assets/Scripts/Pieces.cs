@@ -9,6 +9,7 @@ public class Pieces : MonoBehaviour
 
      [SerializeField] GameObject black;
      [SerializeField] GameObject white;
+    [SerializeField] AudioSource wood;
 
     private bool isblack = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -54,6 +55,7 @@ public class Pieces : MonoBehaviour
     {
         isblack = !isblack;
         change();
+        wood.Play();
     }
     public void change()
     {
@@ -70,5 +72,7 @@ public class Pieces : MonoBehaviour
             white.GetComponent<SpriteRenderer>().sortingOrder = 0;
 
         }
+
+        wood.Play();
     }
 }

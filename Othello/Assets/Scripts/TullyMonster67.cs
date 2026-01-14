@@ -10,6 +10,7 @@ using static UnityEditor.PlayerSettings;
 public class TullyMonster67 : MonoBehaviour
 {
     [SerializeField] GameObject piece;
+    [SerializeField] GameObject animatedpiece;
     private List<GameObject> pieces = new List<GameObject>();
     private bool placed = false;
     private int color = 0;
@@ -24,6 +25,7 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] Text blackwintext;
     [SerializeField] Text whitewintext;
     [SerializeField] Text tietext;
+    [SerializeField] AudioSource wood;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -62,7 +64,69 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(blackwin == true)
+        if (blackwin == true || whitewin == true || tie == true)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                for (int i = 0; i < pieces.Count; i++)
+                {
+                    Destroy(pieces[i]);
+                }
+                pieces.Clear();
+
+
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        board[i, j] = 0;
+                    }
+                }
+
+                placed = false;
+                color = 0;
+                legal = false;
+                blackwin = false;
+                whitewin = false;
+                tie = false;
+
+                blackwintext.enabled = false;
+                whitewintext.enabled = false;
+                tietext.enabled = false;
+
+               
+                GameObject o = Instantiate(piece);
+                pieces.Add(o);
+                o.transform.position = new Vector2(0.51f, 0.51f);
+                o.GetComponent<Pieces>().setblack();
+
+                GameObject o2 = Instantiate(piece);
+                pieces.Add(o2);
+                o2.transform.position = new Vector2(-0.51f, 0.51f);
+                o2.GetComponent<Pieces>().setwhite();
+
+                GameObject o3 = Instantiate(piece);
+                pieces.Add(o3);
+                o3.transform.position = new Vector2(0.51f, -0.51f);
+                o3.GetComponent<Pieces>().setwhite();
+
+                GameObject o4 = Instantiate(piece);
+                pieces.Add(o4);
+                o4.transform.position = new Vector2(-0.51f, -0.51f);
+                o4.GetComponent<Pieces>().setblack();
+
+               
+                current = Instantiate(piece);
+                pieces.Add(current);
+                current.GetComponent<Pieces>().setblack();
+
+              
+                makeboard();
+                PrintBoard();
+            }
+        }
+        
+        if (blackwin == true)
         {
             blackwintext.enabled = true;
         }
@@ -141,6 +205,7 @@ public class TullyMonster67 : MonoBehaviour
             move();
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                
                 correct();
                 Vector2 position = current.transform.position;
                 float closest = 1000000000000000000;
@@ -173,6 +238,7 @@ public class TullyMonster67 : MonoBehaviour
                     Check360(xind, yind, true);
                     if(legal == true)
                     {
+                        wood.Play();
                         placed = true;
                         
                         current = Instantiate(piece);
@@ -261,6 +327,11 @@ public class TullyMonster67 : MonoBehaviour
                                     {
                                         p.GetComponent<Pieces>().setwhite();
                                     }
+                                    wood.PlayOneShot(wood.clip);
+                                    GameObject anim = Instantiate(animatedpiece, p.transform.position, Quaternion.identity);
+                                    Animator animator = anim.GetComponent<Animator>();
+                                    float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
+                                    Destroy(anim, animLength);
                                     break;
                                 }
                             }
@@ -313,6 +384,11 @@ public class TullyMonster67 : MonoBehaviour
                                     {
                                         p.GetComponent<Pieces>().setwhite();
                                     }
+                                    wood.PlayOneShot(wood.clip);
+                                    GameObject anim = Instantiate(animatedpiece, p.transform.position, Quaternion.identity);
+                                    Animator animator = anim.GetComponent<Animator>();
+                                    float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
+                                    Destroy(anim, animLength);
                                     break;
                                 }
                             }
@@ -365,6 +441,11 @@ public class TullyMonster67 : MonoBehaviour
                                     {
                                         p.GetComponent<Pieces>().setwhite();
                                     }
+                                    wood.PlayOneShot(wood.clip);
+                                    GameObject anim = Instantiate(animatedpiece, p.transform.position, Quaternion.identity);
+                                    Animator animator = anim.GetComponent<Animator>();
+                                    float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
+                                    Destroy(anim, animLength);
                                     break;
                                 }
                             }
@@ -417,6 +498,11 @@ public class TullyMonster67 : MonoBehaviour
                                     {
                                         p.GetComponent<Pieces>().setwhite();
                                     }
+                                    wood.PlayOneShot(wood.clip);
+                                    GameObject anim = Instantiate(animatedpiece, p.transform.position, Quaternion.identity);
+                                    Animator animator = anim.GetComponent<Animator>();
+                                    float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
+                                    Destroy(anim, animLength);
                                     break;
                                 }
                             }
@@ -469,6 +555,11 @@ public class TullyMonster67 : MonoBehaviour
                                     {
                                         p.GetComponent<Pieces>().setwhite();
                                     }
+                                    wood.PlayOneShot(wood.clip);
+                                    GameObject anim = Instantiate(animatedpiece, p.transform.position, Quaternion.identity);
+                                    Animator animator = anim.GetComponent<Animator>();
+                                    float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
+                                    Destroy(anim, animLength);
                                     break;
                                 }
                             }
@@ -521,6 +612,11 @@ public class TullyMonster67 : MonoBehaviour
                                     {
                                         p.GetComponent<Pieces>().setwhite();
                                     }
+                                    wood.PlayOneShot(wood.clip);
+                                    GameObject anim = Instantiate(animatedpiece, p.transform.position, Quaternion.identity);
+                                    Animator animator = anim.GetComponent<Animator>();
+                                    float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
+                                    Destroy(anim, animLength);
                                     break;
                                 }
                             }
@@ -573,6 +669,11 @@ public class TullyMonster67 : MonoBehaviour
                                     {
                                         p.GetComponent<Pieces>().setwhite();
                                     }
+                                    wood.PlayOneShot(wood.clip);
+                                    GameObject anim = Instantiate(animatedpiece, p.transform.position, Quaternion.identity);
+                                    Animator animator = anim.GetComponent<Animator>();
+                                    float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
+                                    Destroy(anim, animLength);
                                     break;
                                 }
                             }
@@ -625,6 +726,11 @@ public class TullyMonster67 : MonoBehaviour
                                     {
                                         p.GetComponent<Pieces>().setwhite();
                                     }
+                                    wood.PlayOneShot(wood.clip);
+                                    GameObject anim = Instantiate(animatedpiece, p.transform.position, Quaternion.identity);
+                                    Animator animator = anim.GetComponent<Animator>();
+                                    float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
+                                    Destroy(anim, animLength);
                                     break;
                                 }
                             }
@@ -750,4 +856,5 @@ public class TullyMonster67 : MonoBehaviour
 
         pieces[pieces.Count - 1].transform.position = new Vector2(closestX, closestY);
     }
+    
 }
