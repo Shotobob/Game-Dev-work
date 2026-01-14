@@ -18,10 +18,16 @@ public class TullyMonster67 : MonoBehaviour
     public GameObject current;
     private int[,] board = new int[8, 8];
     private bool legal = false;
+    private bool blackwin = false;
+    private bool whitewin = false;
+    private bool tie = false;
+    [SerializeField] Text blackwintext;
+    [SerializeField] Text whitewintext;
+    [SerializeField] Text tietext;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        blackwintext.enabled = false; whitewintext.enabled = false; tietext.enabled = false;
         GameObject o = Instantiate(piece);
         pieces.Add(o);
         o.transform.position = new Vector2(0.51f, 0.51f);
@@ -56,11 +62,83 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        move();
-        if (placed == false)
+        if(blackwin == true)
         {
+            blackwintext.enabled = true;
+        }
+        if (whitewin == true)
+        {
+            whitewintext.enabled = true;
+        }
+        if (tie == true)
+        {
+            tietext.enabled = true;
+        }
+        if(pieces.Count > 5)
+        {
+            int wincounter = 0;
+            int blackwincounter = 0;
+            int whitewincounter = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (board[i, j] != 0)
+                        wincounter++;
+                    if (board[i, j] == 1)
+                        blackwincounter++;
+                    if (board[i, j] == 2)
+                        whitewincounter++;
+                }
 
+            }
+
+            int currentp = color % 2 == 0 ? 1 : 2;
+            if (haslegal(currentp) == false)
+            {
+                color++;
+                currentp = color % 2 == 0 ? 1 : 2;
+                if (haslegal(currentp) == false)
+                {
+
+                    wincounter = blackwincounter = whitewincounter = 0;
+                    for (int i = 0; i < 8; i++)
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (board[i, j] != 0)
+                                wincounter++;
+                            if (board[i, j] == 1)
+                                blackwincounter++;
+                            if (board[i, j] == 2)
+                                whitewincounter++;
+                        }
+                    }
+
+                    if (blackwincounter > whitewincounter)
+                        blackwin = true;
+                    else if (whitewincounter > blackwincounter)
+                        whitewin = true;
+                    else
+                        tie = true;
+                }
+            }
+            if (wincounter == 64)
+            {
+                if (blackwincounter > whitewincounter)
+                    blackwin = true;
+                if (whitewincounter > blackwincounter)
+                    whitewin = true;
+                if (whitewincounter == blackwincounter)
+                    tie = true;
+
+            }
+        }
+        
+
+        if (placed == false && tie == false && blackwin == false && whitewin == false)
+        {
+            move();
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 correct();
@@ -92,7 +170,7 @@ public class TullyMonster67 : MonoBehaviour
                 {
                     correct();
                     makeboard();
-                    Check360(xind, yind);
+                    Check360(xind, yind, true);
                     if(legal == true)
                     {
                         placed = true;
@@ -117,10 +195,30 @@ public class TullyMonster67 : MonoBehaviour
                 }
             }
         }
+        
+
+
     }
-    public void Check360(int xind, int yind)
+    public bool haslegal(int color)
     {
-        legal = false;
+        for(int i = 0;i < 8;i++)
+        {
+            for(int  j = 0;j < 8;j++)
+            {
+                if(board[i,j] != 0)  
+                    continue;
+                board[i,j] = color;
+                Check360(i,j, false);
+                board[i,j] = 0;
+                if (legal == true)
+                    return true;
+            }
+        }
+        return false;
+    }
+    public void Check360(int xind, int yind, bool real)
+    {
+        bool islegal = false;
         int counter = 0;
         bool cont = true;
         int place = 1;
@@ -129,6 +227,7 @@ public class TullyMonster67 : MonoBehaviour
         counter = 0;
         place = 1;
         cont = true;
+
         if (xind + 1 <= 7 && board[xind + 1, yind] == enemy)
         {
             counter++;
@@ -142,27 +241,31 @@ public class TullyMonster67 : MonoBehaviour
                 }
                 else if (board[xind + place, yind] == color)
                 {
-                    legal = true;
+                    islegal = true;
                     for (int i = 1; i <= counter; i++)
                     {
-                        board[xind + i, yind] = color;
-                        for (int j = 0; j < pieces.Count; j++)
+                        if (real == true)
                         {
-                            GameObject p = pieces[j];
-                            Vector2 position = p.transform.position;
-                            if (Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind]) < 0.01f)
+                            board[xind + i, yind] = color;
+                            for (int j = 0; j < pieces.Count; j++)
                             {
-                                if (color == 1)
+                                GameObject p = pieces[j];
+                                Vector2 position = p.transform.position;
+                                if (Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind]) < 0.01f)
                                 {
-                                    p.GetComponent<Pieces>().setblack();
+                                    if (color == 1)
+                                    {
+                                        p.GetComponent<Pieces>().setblack();
+                                    }
+                                    else
+                                    {
+                                        p.GetComponent<Pieces>().setwhite();
+                                    }
+                                    break;
                                 }
-                                else
-                                {
-                                    p.GetComponent<Pieces>().setwhite();
-                                }
-                                break;
                             }
                         }
+                        
                     }
                     cont = false;
                 }
@@ -190,27 +293,31 @@ public class TullyMonster67 : MonoBehaviour
                 }
                 else if (board[xind + place, yind + place] == color)
                 {
-                    legal = true;
+                    islegal = true;
                     for (int i = 1; i <= counter; i++)
                     {
-                        board[xind + i, yind + i] = color;
-                        for (int j = 0; j < pieces.Count; j++)
+                        if(real == true)
                         {
-                            GameObject p = pieces[j];
-                            Vector2 position = p.transform.position;
-                            if (Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
+                            board[xind + i, yind + i] = color;
+                            for (int j = 0; j < pieces.Count; j++)
                             {
-                                if (color == 1)
+                                GameObject p = pieces[j];
+                                Vector2 position = p.transform.position;
+                                if (Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
                                 {
-                                    p.GetComponent<Pieces>().setblack();
+                                    if (color == 1)
+                                    {
+                                        p.GetComponent<Pieces>().setblack();
+                                    }
+                                    else
+                                    {
+                                        p.GetComponent<Pieces>().setwhite();
+                                    }
+                                    break;
                                 }
-                                else
-                                {
-                                    p.GetComponent<Pieces>().setwhite();
-                                }
-                                break;
                             }
                         }
+                        
                     }
                     cont = false;
                 }
@@ -238,27 +345,31 @@ public class TullyMonster67 : MonoBehaviour
                 }
                 else if (board[xind, yind + place] == color)
                 {
-                    legal = true;
+                    islegal = true;
                     for (int i = 1; i <= counter; i++)
                     {
-                        board[xind, yind + i] = color;
-                        for (int j = 0; j < pieces.Count; j++)
+                        if(real == true)
                         {
-                            GameObject p = pieces[j];
-                            Vector2 position = p.transform.position;
-                            if (Mathf.Abs(position.x - xvalues[xind]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
+                            board[xind, yind + i] = color;
+                            for (int j = 0; j < pieces.Count; j++)
                             {
-                                if (color == 1)
+                                GameObject p = pieces[j];
+                                Vector2 position = p.transform.position;
+                                if (Mathf.Abs(position.x - xvalues[xind]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
                                 {
-                                    p.GetComponent<Pieces>().setblack();
+                                    if (color == 1)
+                                    {
+                                        p.GetComponent<Pieces>().setblack();
+                                    }
+                                    else
+                                    {
+                                        p.GetComponent<Pieces>().setwhite();
+                                    }
+                                    break;
                                 }
-                                else
-                                {
-                                    p.GetComponent<Pieces>().setwhite();
-                                }
-                                break;
                             }
                         }
+                        
                     }
                     cont = false;
                 }
@@ -286,27 +397,31 @@ public class TullyMonster67 : MonoBehaviour
                 }
                 else if (board[xind - place, yind + place] == color)
                 {
-                    legal = true;
+                    islegal = true;
                     for (int i = 1; i <= counter; i++)
                     {
-                        board[xind - i, yind + i] = color;
-                        for (int j = 0; j < pieces.Count; j++)
+                        if(real == true)
                         {
-                            GameObject p = pieces[j];
-                            Vector2 position = p.transform.position;
-                            if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
+                            board[xind - i, yind + i] = color;
+                            for (int j = 0; j < pieces.Count; j++)
                             {
-                                if (color == 1)
+                                GameObject p = pieces[j];
+                                Vector2 position = p.transform.position;
+                                if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
                                 {
-                                    p.GetComponent<Pieces>().setblack();
+                                    if (color == 1)
+                                    {
+                                        p.GetComponent<Pieces>().setblack();
+                                    }
+                                    else
+                                    {
+                                        p.GetComponent<Pieces>().setwhite();
+                                    }
+                                    break;
                                 }
-                                else
-                                {
-                                    p.GetComponent<Pieces>().setwhite();
-                                }
-                                break;
                             }
                         }
+                        
                     }
                     cont = false;
                 }
@@ -334,27 +449,31 @@ public class TullyMonster67 : MonoBehaviour
                 }
                 else if (board[xind - place, yind] == color)
                 {
-                    legal = true;
+                    islegal = true;
                     for (int i = 1; i <= counter; i++)
                     {
-                        board[xind - i, yind] = color;
-                        for (int j = 0; j < pieces.Count; j++)
+                        if(real == true)
                         {
-                            GameObject p = pieces[j];
-                            Vector2 position = p.transform.position;
-                            if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind]) < 0.01f)
+                            board[xind - i, yind] = color;
+                            for (int j = 0; j < pieces.Count; j++)
                             {
-                                if (color == 1)
+                                GameObject p = pieces[j];
+                                Vector2 position = p.transform.position;
+                                if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind]) < 0.01f)
                                 {
-                                    p.GetComponent<Pieces>().setblack();
+                                    if (color == 1)
+                                    {
+                                        p.GetComponent<Pieces>().setblack();
+                                    }
+                                    else
+                                    {
+                                        p.GetComponent<Pieces>().setwhite();
+                                    }
+                                    break;
                                 }
-                                else
-                                {
-                                    p.GetComponent<Pieces>().setwhite();
-                                }
-                                break;
                             }
                         }
+                        
                     }
                     cont = false;
                 }
@@ -382,27 +501,31 @@ public class TullyMonster67 : MonoBehaviour
                 }
                 else if (board[xind - place, yind - place] == color)
                 {
-                    legal = true;
+                    islegal = true;
                     for (int i = 1; i <= counter; i++)
                     {
-                        board[xind - i, yind - i] = color;
-                        for (int j = 0; j < pieces.Count; j++)
+                        if(real == true)
                         {
-                            GameObject p = pieces[j];
-                            Vector2 position = p.transform.position;
-                            if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
+                            board[xind - i, yind - i] = color;
+                            for (int j = 0; j < pieces.Count; j++)
                             {
-                                if (color == 1)
+                                GameObject p = pieces[j];
+                                Vector2 position = p.transform.position;
+                                if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
                                 {
-                                    p.GetComponent<Pieces>().setblack();
+                                    if (color == 1)
+                                    {
+                                        p.GetComponent<Pieces>().setblack();
+                                    }
+                                    else
+                                    {
+                                        p.GetComponent<Pieces>().setwhite();
+                                    }
+                                    break;
                                 }
-                                else
-                                {
-                                    p.GetComponent<Pieces>().setwhite();
-                                }
-                                break;
                             }
                         }
+                        
                     }
                     cont = false;
                 }
@@ -430,27 +553,31 @@ public class TullyMonster67 : MonoBehaviour
                 }
                 else if (board[xind, yind - place] == color)
                 {
-                    legal = true;
+                    islegal = true;
                     for (int i = 1; i <= counter; i++)
                     {
-                        board[xind, yind - i] = color;
-                        for (int j = 0; j < pieces.Count; j++)
+                        if(real == true)
                         {
-                            GameObject p = pieces[j];
-                            Vector2 position = p.transform.position;
-                            if (Mathf.Abs(position.x - xvalues[xind]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
+                            board[xind, yind - i] = color;
+                            for (int j = 0; j < pieces.Count; j++)
                             {
-                                if (color == 1)
+                                GameObject p = pieces[j];
+                                Vector2 position = p.transform.position;
+                                if (Mathf.Abs(position.x - xvalues[xind]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
                                 {
-                                    p.GetComponent<Pieces>().setblack();
+                                    if (color == 1)
+                                    {
+                                        p.GetComponent<Pieces>().setblack();
+                                    }
+                                    else
+                                    {
+                                        p.GetComponent<Pieces>().setwhite();
+                                    }
+                                    break;
                                 }
-                                else
-                                {
-                                    p.GetComponent<Pieces>().setwhite();
-                                }
-                                break;
                             }
                         }
+                       
                     }
                     cont = false;
                 }
@@ -478,27 +605,31 @@ public class TullyMonster67 : MonoBehaviour
                 }
                 else if (board[xind + place, yind - place] == color)
                 {
-                    legal = true;
+                    islegal = true;
                     for (int i = 1; i <= counter; i++)
                     {
-                        board[xind + i, yind - i] = color;
-                        for(int j = 0; j < pieces.Count; j++)
+                        if(real == true)
                         {
-                            GameObject p = pieces[j];
-                            Vector2 position = p.transform.position;
-                            if(Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
+                            board[xind + i, yind - i] = color;
+                            for (int j = 0; j < pieces.Count; j++)
                             {
-                                if (color == 1)
+                                GameObject p = pieces[j];
+                                Vector2 position = p.transform.position;
+                                if (Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
                                 {
-                                    p.GetComponent<Pieces>().setblack();
+                                    if (color == 1)
+                                    {
+                                        p.GetComponent<Pieces>().setblack();
+                                    }
+                                    else
+                                    {
+                                        p.GetComponent<Pieces>().setwhite();
+                                    }
+                                    break;
                                 }
-                                else
-                                {
-                                    p.GetComponent<Pieces>().setwhite();
-                                }
-                                break;
                             }
                         }
+                        
                     }
                         
                     cont = false;
@@ -512,6 +643,7 @@ public class TullyMonster67 : MonoBehaviour
                 }
             }
         }
+        legal = islegal;
     }
     public void PrintBoard()
     {
