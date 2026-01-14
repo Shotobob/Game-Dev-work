@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
 
 public class TullyMonster67 : MonoBehaviour
 {
@@ -13,14 +14,14 @@ public class TullyMonster67 : MonoBehaviour
     private bool placed = false;
     private int color = 0;
     private float[] xvalues = { -3.66f, -2.61f, -1.56f, -0.51f, 0.51f, 1.56f, 2.61f, 3.66f };
-    private float[] yvalues = { -3.66f, -2.61f, -1.56f ,-0.51f, 0.51f, 1.56f, 2.61f, 3.66f };
+    private float[] yvalues = { -3.66f, -2.61f, -1.56f, -0.51f, 0.51f, 1.56f, 2.61f, 3.66f };
     public GameObject current;
     private int[,] board = new int[8, 8];
     private bool legal = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
         GameObject o = Instantiate(piece);
         pieces.Add(o);
         o.transform.position = new Vector2(0.51f, 0.51f);
@@ -41,7 +42,7 @@ public class TullyMonster67 : MonoBehaviour
         pieces.Add(o4);
         o4.transform.position = new Vector2(-0.51f, -0.51f);
         o4.GetComponent<Pieces>().setblack();
-        
+
         current = Instantiate(piece);
         pieces.Add(current);
         current.GetComponent<Pieces>().setblack();
@@ -55,7 +56,7 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         move();
         if (placed == false)
         {
@@ -86,87 +87,431 @@ public class TullyMonster67 : MonoBehaviour
                         yind = y;
                     }
                 }
-                
-                if(board[xind, yind] != 1 && board[xind, yind] != 2)
+
+                if (board[xind, yind] != 1 && board[xind, yind] != 2)
                 {
-                    placed = true;
-                    current = Instantiate(piece);
-                    pieces.Add(current);
-                    if (color % 2 == 0)
+                    correct();
+                    //makeboard();
+                    int currentColor = (color % 2 == 0) ? 2 : 1;
+                    board[xind, yind] = currentColor;
+                    Check360(xind, yind, currentColor);
+                    if(legal == true)
                     {
-                        current.GetComponent<Pieces>().setwhite();
+                        placed = true;
+                        makeboard();
+                        current = Instantiate(piece);
+                        pieces.Add(current);
+                        if (color % 2 == 0)
+                        {
+                            current.GetComponent<Pieces>().setwhite();
+                        }
+                        else
+                        {
+                            current.GetComponent<Pieces>().setblack();
+                        }
+                        color++;
+                        
+                        PrintBoard();
                     }
-                    else
-                    {
-                        current.GetComponent<Pieces>().setblack();
-                    }
-                    color++;
-                    makeboard();
-                    PrintBoard();
+                    
                 }
             }
         }
     }
-    public void Check360(int xind, int yind)
+    public void Check360(int xind, int yind, int currentColor)
     {
+        legal = false;
         int counter = 0;
         bool cont = true;
         int place = 1;
-        int color = board[xind, yind];
-        if(xind + 1 <= 7 && xind - 1 >= 0 && yind >= 0 && yind <= 7)
+        int color = currentColor;
+        int enemy = (color == 1) ? 2 : 1;
+        counter = 0;
+        place = 1;
+        cont = true;
+        if (xind + 1 <= 7 && board[xind + 1, yind] == enemy)
         {
-            if(board[xind+1, yind] != color && board[xind+1, yind] != 0)
+            counter++;
+            place++;
+            while (cont && xind + place <= 7)
             {
-                counter++;
-                place++;
-                /*while(cont)
+                if (board[xind + place, yind] == enemy)
                 {
-                    if(board[xind+place, yind] == color)
+                    counter++;
+                    place++;
+                }
+                else if (board[xind + place, yind] == color)
+                {
+                    legal = true;
+                    for (int i = 1; i <= counter; i++)
                     {
-                        cont = false;
+                        board[xind + i, yind] = color;
+                        for (int j = 0; j < pieces.Count; j++)
+                        {
+                            GameObject p = pieces[j];
+                            Vector2 position = p.transform.position;
+                            if (Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind]) < 0.01f)
+                            {
+                                if (color == 1)
+                                {
+                                    p.GetComponent<Pieces>().setblack();
+                                }
+                                else
+                                {
+                                    p.GetComponent<Pieces>().setwhite();
+                                }
+                                break;
+                            }
+                        }
                     }
-                    else if(board[xind+place, yind] == 0){
-                        counter = 0;
-                        place = 1;
-                        cont = false;
+                    cont = false;
+                }
+                else
+                {
+                    cont = false;
+                }
+            }
+
+        }
+        counter = 0;
+        place = 1;
+        cont = true;
+        if (xind + 1 <= 7 && yind + 1 <= 7 && board[xind + 1, yind + 1] == enemy)
+        {
+            counter++;
+            place++;
+
+            while (cont && xind + place <= 7 && yind + place <= 7)
+            {
+                if (board[xind + place, yind + place] == enemy)
+                {
+                    counter++;
+                    place++;
+                }
+                else if (board[xind + place, yind + place] == color)
+                {
+                    legal = true;
+                    for (int i = 1; i <= counter; i++)
+                    {
+                        board[xind + i, yind + i] = color;
+                        for (int j = 0; j < pieces.Count; j++)
+                        {
+                            GameObject p = pieces[j];
+                            Vector2 position = p.transform.position;
+                            if (Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
+                            {
+                                if (color == 1)
+                                {
+                                    p.GetComponent<Pieces>().setblack();
+                                }
+                                else
+                                {
+                                    p.GetComponent<Pieces>().setwhite();
+                                }
+                                break;
+                            }
+                        }
                     }
-                    else{
-                        counter++;
-                        place++;
+                    cont = false;
+                }
+                else
+                {
+                    cont = false;
+                }
+            }
+        }
+        counter = 0;
+        place = 1;
+        cont = true;
+
+        if (yind + 1 <= 7 && board[xind, yind + 1] == enemy)
+        {
+            counter++;
+            place++;
+
+            while (cont && yind + place <= 7)
+            {
+                if (board[xind, yind + place] == enemy)
+                {
+                    counter++;
+                    place++;
+                }
+                else if (board[xind, yind + place] == color)
+                {
+                    legal = true;
+                    for (int i = 1; i <= counter; i++)
+                    {
+                        board[xind, yind + i] = color;
+                        for (int j = 0; j < pieces.Count; j++)
+                        {
+                            GameObject p = pieces[j];
+                            Vector2 position = p.transform.position;
+                            if (Mathf.Abs(position.x - xvalues[xind]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
+                            {
+                                if (color == 1)
+                                {
+                                    p.GetComponent<Pieces>().setblack();
+                                }
+                                else
+                                {
+                                    p.GetComponent<Pieces>().setwhite();
+                                }
+                                break;
+                            }
+                        }
                     }
-                }*/
-
-
+                    cont = false;
+                }
+                else
+                {
+                    cont = false;
+                }
             }
-            /*if(board[xind+1, yind+1] == color)
-            {
+        }
+        counter = 0;
+        place = 1;
+        cont = true;
 
+        if (xind - 1 >= 0 && yind + 1 <= 7 && board[xind - 1, yind + 1] == enemy)
+        {
+            counter++;
+            place++;
+
+            while (cont && xind - place >= 0 && yind + place <= 7)
+            {
+                if (board[xind - place, yind + place] == enemy)
+                {
+                    counter++;
+                    place++;
+                }
+                else if (board[xind - place, yind + place] == color)
+                {
+                    legal = true;
+                    for (int i = 1; i <= counter; i++)
+                    {
+                        board[xind - i, yind + i] = color;
+                        for (int j = 0; j < pieces.Count; j++)
+                        {
+                            GameObject p = pieces[j];
+                            Vector2 position = p.transform.position;
+                            if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind + i]) < 0.01f)
+                            {
+                                if (color == 1)
+                                {
+                                    p.GetComponent<Pieces>().setblack();
+                                }
+                                else
+                                {
+                                    p.GetComponent<Pieces>().setwhite();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    cont = false;
+                }
+                else
+                {
+                    cont = false;
+                }
             }
-            if(board[xind, yind+1] == color)
-            {
+        }
+        counter = 0;
+        place = 1;
+        cont = true;
 
+        if (xind - 1 >= 0 && board[xind - 1, yind] == enemy)
+        {
+            counter++;
+            place++;
+
+            while (cont && xind - place >= 0)
+            {
+                if (board[xind - place, yind] == enemy)
+                {
+                    counter++;
+                    place++;
+                }
+                else if (board[xind - place, yind] == color)
+                {
+                    legal = true;
+                    for (int i = 1; i <= counter; i++)
+                    {
+                        board[xind - i, yind] = color;
+                        for (int j = 0; j < pieces.Count; j++)
+                        {
+                            GameObject p = pieces[j];
+                            Vector2 position = p.transform.position;
+                            if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind]) < 0.01f)
+                            {
+                                if (color == 1)
+                                {
+                                    p.GetComponent<Pieces>().setblack();
+                                }
+                                else
+                                {
+                                    p.GetComponent<Pieces>().setwhite();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    cont = false;
+                }
+                else
+                {
+                    cont = false;
+                }
             }
-            if(board[xind-1, yind+1] == color)
-            {
+        }
+        counter = 0;
+        place = 1;
+        cont = true;
 
+        if (xind - 1 >= 0 && yind - 1 >= 0 && board[xind - 1, yind - 1] == enemy)
+        {
+            counter++;
+            place++;
+
+            while (cont && xind - place >= 0 && yind - place >= 0)
+            {
+                if (board[xind - place, yind - place] == enemy)
+                {
+                    counter++;
+                    place++;
+                }
+                else if (board[xind - place, yind - place] == color)
+                {
+                    legal = true;
+                    for (int i = 1; i <= counter; i++)
+                    {
+                        board[xind - i, yind - i] = color;
+                        for (int j = 0; j < pieces.Count; j++)
+                        {
+                            GameObject p = pieces[j];
+                            Vector2 position = p.transform.position;
+                            if (Mathf.Abs(position.x - xvalues[xind - i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
+                            {
+                                if (color == 1)
+                                {
+                                    p.GetComponent<Pieces>().setblack();
+                                }
+                                else
+                                {
+                                    p.GetComponent<Pieces>().setwhite();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    cont = false;
+                }
+                else
+                {
+                    cont = false;
+                }
             }
-            if(board[xind-1, yind] == color)
-            {
+        }
+        counter = 0;
+        place = 1;
+        cont = true;
 
+        if (yind - 1 >= 0 && board[xind, yind - 1] == enemy)
+        {
+            counter++;
+            place++;
+
+            while (cont && yind - place >= 0)
+            {
+                if (board[xind, yind - place] == enemy)
+                {
+                    counter++;
+                    place++;
+                }
+                else if (board[xind, yind - place] == color)
+                {
+                    legal = true;
+                    for (int i = 1; i <= counter; i++)
+                    {
+                        board[xind, yind - i] = color;
+                        for (int j = 0; j < pieces.Count; j++)
+                        {
+                            GameObject p = pieces[j];
+                            Vector2 position = p.transform.position;
+                            if (Mathf.Abs(position.x - xvalues[xind]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
+                            {
+                                if (color == 1)
+                                {
+                                    p.GetComponent<Pieces>().setblack();
+                                }
+                                else
+                                {
+                                    p.GetComponent<Pieces>().setwhite();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    cont = false;
+                }
+                else
+                {
+                    cont = false;
+                }
             }
-            if(board[xind-1, yind-1] == color)
-            {
+        }
+        counter = 0;
+        place = 1;
+        cont = true;
 
+        if (xind + 1 <= 7 && yind - 1 >= 0 && board[xind + 1, yind - 1] == enemy)
+        {
+            counter++;
+            place++;
+
+            while (cont && xind + place <= 7 && yind - place >= 0)
+            {
+                if (board[xind + place, yind - place] == enemy)
+                {
+                    counter++;
+                    place++;
+                }
+                else if (board[xind + place, yind - place] == color)
+                {
+                    legal = true;
+                    for (int i = 1; i <= counter; i++)
+                    {
+                        board[xind + i, yind - i] = color;
+                        for(int j = 0; j < pieces.Count; j++)
+                        {
+                            GameObject p = pieces[j];
+                            Vector2 position = p.transform.position;
+                            if(Mathf.Abs(position.x - xvalues[xind + i]) < 0.01f && Mathf.Abs(position.y - yvalues[yind - i]) < 0.01f)
+                            {
+                                if (color == 1)
+                                {
+                                    p.GetComponent<Pieces>().setblack();
+                                }
+                                else
+                                {
+                                    p.GetComponent<Pieces>().setwhite();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                        
+                    cont = false;
+                }
+                else
+                {
+                    cont = false;
+
+
+
+                }
             }
-            if(board[xind, yind-1] == color)
-            {
-
-            }
-            if(board[xind+1, yind-1] == color)
-            {
-
-            }*/
-        } 
+        }
     }
     public void PrintBoard()
     {
@@ -233,7 +578,7 @@ public class TullyMonster67 : MonoBehaviour
                 }
             }
         }
-        placed = false;
+        //placed = false;
     }
     
     
