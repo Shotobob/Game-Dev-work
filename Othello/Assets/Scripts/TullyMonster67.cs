@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
 
 public class TullyMonster67 : MonoBehaviour
 {
