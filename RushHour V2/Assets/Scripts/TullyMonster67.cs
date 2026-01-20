@@ -14,8 +14,8 @@ public class TullyMonster67 : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(scoreText);
-        DontDestroyOnLoad(winText);
+        //DontDestroyOnLoad(scoreText);
+        //DontDestroyOnLoad(winText);
         winText.enabled = false;
         win = false;
     }
@@ -23,24 +23,20 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //DontDestroyOnLoad(this);
+        scoreText = GameObject.Find("tim").GetComponent<Text>();
+        winText = GameObject.Find("win").GetComponent<Text>();
         if(win == false)
         {
-            moves += Time.deltaTime;
-            scoreText.text = "Time: " + (int)moves;
-        }
-        if (win == true)
-        {
-            if (SceneManager.GetActiveScene().buildIndex == 0)
-            {
-                SceneManager.LoadScene(1);
-            }
-            if (SceneManager.GetActiveScene().buildIndex == 1)
-            {
-                SceneManager.LoadScene(2);
-            }
-            win = false;
+            winText.enabled = false;
+
         }
         
+        
+            moves += Time.deltaTime;
+            scoreText.text = "Time: " + (int)moves;
+        
+       
         
     }
     public void addMove()
@@ -66,6 +62,21 @@ public class TullyMonster67 : MonoBehaviour
     public void setZero()
     {
         moves = 0;
+
+    }
+    public void next()
+    {
+        winText.enabled = false;
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                SceneManager.LoadScene(1);
+                //win = false;
+            }
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                SceneManager.LoadScene(2);
+                //win = false;
+            }
 
     }
 }

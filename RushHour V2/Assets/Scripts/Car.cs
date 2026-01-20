@@ -14,7 +14,7 @@ public class Car : MonoBehaviour
     //[SerializeField] bool win;
 
 
-    [SerializeField] GameObject manager;
+    [SerializeField] TullyMonster67 manager;
     private float ogx = 0;
     private float ogy = 0;
     private float ogz = 0;
@@ -22,6 +22,7 @@ public class Car : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        manager = GameObject.Find("GameManager").GetComponent<TullyMonster67>();
         dragging = false;
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
@@ -68,7 +69,7 @@ public class Car : MonoBehaviour
             RaycastHit2D[] rays = Physics2D.RaycastAll(transform.position, Vector2.left, 1.2f);
             if (rays.Length >= 3)
             {
-                manager.GetComponent<TullyMonster67>().setWin(true);
+                manager.GetComponent<TullyMonster67>().next();
                 //manager.GetComponent<TullyMonster67>().winningText(true);
                 
             }
