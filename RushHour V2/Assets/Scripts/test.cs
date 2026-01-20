@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class Car : MonoBehaviour
+public class test : MonoBehaviour
 {
     Rigidbody2D rb;
-    [SerializeField] bool vert; 
-    [SerializeField] bool race; 
+    [SerializeField] bool vert;
+    [SerializeField] bool race;
     public bool end = false;
     public bool dragging = false;
     //[SerializeField] bool win;
@@ -31,18 +31,19 @@ public class Car : MonoBehaviour
         //manager.GetComponent<TullyMonster67>().setWin(false);
         ogx = transform.position.x;
         ogy = transform.position.y;
-        
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(vert == true)
+        if (vert == true)
         {
             transform.position = new Vector3(ogx, transform.position.y, transform.position.z);
         }
-        else{
+        else
+        {
             transform.position = new Vector3(transform.position.x, ogy, transform.position.z);
         }
         if (manager.GetComponent<TullyMonster67>().isWin() == true)
@@ -51,7 +52,7 @@ public class Car : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if(end == true)
+            if (end == true)
             {
                 transform.position = new Vector3(ogx, ogy, transform.position.z);
                 manager.GetComponent<TullyMonster67>().winningText(false);
@@ -60,21 +61,21 @@ public class Car : MonoBehaviour
                 manager.GetComponent<TullyMonster67>().setZero();
                 end = false;
             }
-            
+
 
         }
-        if(race == true)
+        if (race == true)
         {
             RaycastHit2D[] rays = Physics2D.RaycastAll(transform.position, Vector2.left, 1.2f);
             if (rays.Length >= 3)
             {
                 manager.GetComponent<TullyMonster67>().setWin(true);
-                //manager.GetComponent<TullyMonster67>().winningText(true);
-                
+                manager.GetComponent<TullyMonster67>().winningText(true);
+
             }
 
         }
-        
+
     }
     private void OnMouseDown()
     {
@@ -89,22 +90,22 @@ public class Car : MonoBehaviour
     {
         rb.bodyType = RigidbodyType2D.Static;
         dragging = false;
-        
+
 
     }
     private void FixedUpdate()
     {
-        if(dragging == true)
+        if (dragging == true)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float x = mousePos.x - transform.position.x;
             float y = mousePos.y - transform.position.y;
 
-            Vector2 vel = new Vector2 (x, y);
-            rb.linearVelocity = vel/Time.deltaTime;
+            Vector2 vel = new Vector2(x, y);
+            rb.linearVelocity = vel / Time.deltaTime;
 
         }
-        
+
     }
-    
+
 }
