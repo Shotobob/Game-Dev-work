@@ -57,12 +57,13 @@ public class TullyMonster67 : MonoBehaviour
     }
     public void winningText(bool win)
     {
-        winText.enabled = win;
+        winText.enabled = true;
 
     }
     public void setWin(bool win2)
     {
         win = win2;
+         winText.enabled = true;
 
     }
     public bool isWin()

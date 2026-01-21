@@ -61,6 +61,7 @@ public class Car : MonoBehaviour
                 manager.GetComponent<TullyMonster67>().setWin(false);
                 manager.GetComponent<TullyMonster67>().setZero();
                 end = false;
+                SceneManager.Load;
             }
             
 
