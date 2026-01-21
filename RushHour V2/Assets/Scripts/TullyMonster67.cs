@@ -8,6 +8,8 @@ public class TullyMonster67 : MonoBehaviour
 {
     [SerializeField] Text scoreText;
     private float moves = 0f;
+    private float minutes = 0f;
+    private float hours = 0f;
     [SerializeField] Text winText;
     private bool win = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,10 +36,20 @@ public class TullyMonster67 : MonoBehaviour
         
         
             moves += Time.deltaTime;
-            scoreText.text = "Time: " + (int)moves;
-        
-       
-        
+            scoreText.text = "Time: " + (int)hours + ":" +(int)minutes + ":" + (int)moves;
+        if(moves >60f)
+        {
+            minutes++;
+            moves = 0f;
+        }
+        if (minutes > 60f)
+        {
+            hours++;
+            minutes = 0f;
+        }
+
+
+
     }
     public void addMove()
     {
@@ -77,6 +89,17 @@ public class TullyMonster67 : MonoBehaviour
                 SceneManager.LoadScene(2);
                 //win = false;
             }
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            SceneManager.LoadScene(3);
+            //win = false;
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            SceneManager.LoadScene(4);
+            //win = false;
+        }
+
 
     }
 }

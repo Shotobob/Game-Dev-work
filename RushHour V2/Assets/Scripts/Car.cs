@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Car : MonoBehaviour
 {
@@ -70,8 +71,14 @@ public class Car : MonoBehaviour
             if (rays.Length >= 3)
             {
                 manager.GetComponent<TullyMonster67>().next();
+                if (SceneManager.GetActiveScene().buildIndex == 4)
+                {
+                    manager.GetComponent<TullyMonster67>().setWin(true);
+                    manager.GetComponent<TullyMonster67>().winningText(true);
+                    //win = false;
+                }
                 //manager.GetComponent<TullyMonster67>().winningText(true);
-                
+
             }
 
         }
