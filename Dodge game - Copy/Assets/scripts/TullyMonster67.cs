@@ -9,6 +9,10 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] List<GameObject> winsprites;
     [SerializeField] Text wintext;
     [SerializeField] Text losetext;
+    [SerializeField] Text scoreText;
+    private float moves = 0f;
+    private float minutes = 0f;
+    private float hours = 0f;
     int count = 0;
     bool ifwin = false;
     bool iflose = false;
@@ -40,6 +44,9 @@ public class TullyMonster67 : MonoBehaviour
                 ifwin = false;
                 iflose = false;
                 count = 0;
+                moves = 0f;
+                minutes = 0f;
+                hours = 0f;
                 
             }
         }
@@ -48,6 +55,25 @@ public class TullyMonster67 : MonoBehaviour
             losetext.enabled=true;
             iflose = true;
         }
+        if (ifwin == false && iflose == false)
+        {
+            moves += Time.deltaTime;
+            scoreText.text = "Time: " + (int)hours + ":" +(int)minutes + ":" + (int)moves;
+            if(moves >60f)
+            {
+                minutes++;
+                moves = 0f;
+            }
+            if (minutes > 60f)
+            {
+                hours++;
+                minutes = 0f;
+            }
+
+        }
+
+        
+
     }
     public void endlife()
     {
