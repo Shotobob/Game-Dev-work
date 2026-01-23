@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class TullyMonster67 : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class TullyMonster67 : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DontDestroyOnLoad(this);
         wintext.enabled = false;
         losetext.enabled = false;
 
@@ -96,6 +98,30 @@ public class TullyMonster67 : MonoBehaviour
     public bool islose()
     {
         return iflose;
+    }
+    public void next()
+    {
+        //winText.enabled = false;
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            SceneManager.LoadScene(1);
+            //win = false;
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            SceneManager.LoadScene(2);
+            //win = false;
+        }
+        
+
+    }
+    public bool last()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            return true;
+        }
+        return false;
     }
 
 }

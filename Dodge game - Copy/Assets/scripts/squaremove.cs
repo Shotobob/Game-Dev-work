@@ -4,7 +4,7 @@ public class squaremove : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] float speed;
-    [SerializeField] GameObject manager;
+    [SerializeField] TullyMonster67 manager;
     bool up, down, left, right;
     Rigidbody2D rb;
     float ogx = 0;
@@ -15,6 +15,7 @@ public class squaremove : MonoBehaviour
 
     void Start()
     {
+        manager = GameObject.Find("Manager").GetComponent<TullyMonster67>();
         lose = false;
         win = false;
         ogx = transform.position.x;
@@ -116,8 +117,16 @@ public class squaremove : MonoBehaviour
         }
         if (collision.gameObject.tag.Equals("win"))
         {
-            win = true;
-            manager.GetComponent<TullyMonster67>().win();
+            if (manager.GetComponent<TullyMonster67>().last() == true)
+            {
+                win = true;
+                manager.GetComponent<TullyMonster67>().win();
+
+            }
+            else{
+                manager.GetComponent<TullyMonster67>().next();
+            }
+            
         }
 
     }

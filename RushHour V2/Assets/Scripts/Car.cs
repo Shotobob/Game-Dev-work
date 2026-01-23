@@ -23,7 +23,7 @@ public class Car : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        manager = GameObject.Find("GameManager").GetComponent<TullyMonster67>();
+        manager = GameObject.Find("Manager").GetComponent<TullyMonster67>();
         dragging = false;
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
