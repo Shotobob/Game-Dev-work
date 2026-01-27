@@ -81,15 +81,15 @@ public class TullyMonster67 : MonoBehaviour
     {
         winText.enabled = false;
         if (SceneManager.GetActiveScene().buildIndex == 0)
-            {
-                SceneManager.LoadScene(1);
-                //win = false;
-            }
-            if (SceneManager.GetActiveScene().buildIndex == 1)
-            {
-                SceneManager.LoadScene(2);
-                //win = false;
-            }
+        {
+            SceneManager.LoadScene(1);
+            //win = false;
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            SceneManager.LoadScene(2);
+            //win = false;
+        }
         if (SceneManager.GetActiveScene().buildIndex == 2)
         {
             SceneManager.LoadScene(3);

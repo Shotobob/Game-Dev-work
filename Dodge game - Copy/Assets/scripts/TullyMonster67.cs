@@ -21,12 +21,20 @@ public class TullyMonster67 : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this.wintext);
+        DontDestroyOnLoad(this.losetext);
+        DontDestroyOnLoad(this.scoreText);
+         DontDestroyOnLoad(this.winsprites[0]);
+          DontDestroyOnLoad(this.winsprites[1]);
+           DontDestroyOnLoad(this.winsprites[2]);
+        
         wintext.enabled = false;
         losetext.enabled = false;
 
         foreach (var sprite in winsprites)
         {
             sprite.SetActive(true);
+            DontDestroyOnLoad(this.winsprites[0]);
         }
     }
 
