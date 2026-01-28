@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class TullyMonster67 : MonoBehaviour
 {
     [SerializeField] List<GameObject> winsprites;
+    [SerializeField] GameObject livesCanvas;
     [SerializeField] Text wintext;
     [SerializeField] Text losetext;
     [SerializeField] Text scoreText;
@@ -21,26 +22,33 @@ public class TullyMonster67 : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(this.wintext);
-        DontDestroyOnLoad(this.losetext);
-        DontDestroyOnLoad(this.scoreText);
-         DontDestroyOnLoad(this.winsprites[0]);
-          DontDestroyOnLoad(this.winsprites[1]);
-           DontDestroyOnLoad(this.winsprites[2]);
-        
-        wintext.enabled = false;
-        losetext.enabled = false;
-
+        DontDestroyOnLoad(livesCanvas);
+        DontDestroyOnLoad(wintext.gameObject);
+        DontDestroyOnLoad(losetext.gameObject);
+        DontDestroyOnLoad(scoreText.gameObject);
         foreach (var sprite in winsprites)
         {
             sprite.SetActive(true);
-            DontDestroyOnLoad(this.winsprites[0]);
         }
+
+        wintext.enabled = false;
+        losetext.enabled = false;
+
+  
     }
 
     // Update is called once per frame
     void Update()
     {
+        int totalLives = winsprites.Count;
+
+        for (int i = 0; i < totalLives; i++)
+        {
+            if (i < totalLives - count)
+                winsprites[i].SetActive(true);   
+            else
+                winsprites[i].SetActive(false);  
+        }
         if (ifwin == true || iflose == true)
         {
             if (Input.GetKeyDown(KeyCode.R))
@@ -60,7 +68,7 @@ public class TullyMonster67 : MonoBehaviour
                 
             }
         }
-        if (count >= 3 && !losetext.enabled)
+        if (count >= winsprites.Count && !losetext.enabled)
         {
             losetext.enabled=true;
             iflose = true;

@@ -6,6 +6,11 @@ TagManager:
   tags:
   - death
   - win
+  - Life
+  - wintext
+  - losetext
+  - livestext
+  - timetext
   layers:
   - Default
   - TransparentFX
