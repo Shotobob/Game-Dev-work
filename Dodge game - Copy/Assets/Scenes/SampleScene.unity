@@ -5358,6 +5358,10 @@ MonoBehaviour:
   - {fileID: 1383458429}
   - {fileID: 1117159093}
   livesCanvas: {fileID: 628537824}
+  life1: {fileID: 1117159093}
+  life2: {fileID: 1383458429}
+  life3: {fileID: 1681090167}
+  camera: {fileID: 519420028}
   wintext: {fileID: 1664782623}
   losetext: {fileID: 417501294}
   scoreText: {fileID: 2010382136}
@@ -5375,6 +5379,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1266365507}
+  - {fileID: 1514164874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1047729261
@@ -8118,13 +8123,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514164872}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 21.7, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -25.75619, y: 14.626691, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 491022238}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 955460984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1514164875
 MonoBehaviour:
@@ -11897,7 +11902,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 1514164874}
   - {fileID: 1953571166}
   - {fileID: 727245728}
   - {fileID: 1637091761}

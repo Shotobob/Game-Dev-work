@@ -9,6 +9,10 @@ public class TullyMonster67 : MonoBehaviour
 {
     [SerializeField] List<GameObject> winsprites;
     [SerializeField] GameObject livesCanvas;
+    [SerializeField] GameObject life1;
+    [SerializeField] GameObject life2;
+    [SerializeField] GameObject life3;
+    [SerializeField] GameObject camera;
     [SerializeField] Text wintext;
     [SerializeField] Text losetext;
     [SerializeField] Text scoreText;
@@ -22,7 +26,11 @@ public class TullyMonster67 : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        DontDestroyOnLoad(camera);
         DontDestroyOnLoad(livesCanvas);
+        DontDestroyOnLoad(life1);
+        DontDestroyOnLoad(life2);
+        DontDestroyOnLoad(life3);
         DontDestroyOnLoad(wintext.gameObject);
         DontDestroyOnLoad(losetext.gameObject);
         DontDestroyOnLoad(scoreText.gameObject);

@@ -15,13 +15,19 @@ public class squaremove : MonoBehaviour
 
     void Start()
     {
+
         manager = GameObject.Find("Manager").GetComponent<TullyMonster67>();
+        transform.position = new Vector3(-45f, 22f, transform.position.z);
         lose = false;
         win = false;
         ogx = transform.position.x;
         ogy = transform.position.y;
 
         rb = GetComponent<Rigidbody2D>();
+    }
+    void Awake()
+    {
+        transform.position = new Vector3(-45f, 22f, transform.position.z);
     }
 
     // Update is called once per frame
