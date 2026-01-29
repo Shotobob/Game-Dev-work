@@ -11,6 +11,8 @@ TagManager:
   - losetext
   - livestext
   - timetext
+  - reset
+  - kirk
   layers:
   - Default
   - TransparentFX

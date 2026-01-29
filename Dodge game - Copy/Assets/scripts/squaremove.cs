@@ -28,6 +28,13 @@ public class squaremove : MonoBehaviour
     void Awake()
     {
         transform.position = new Vector3(-45f, 22f, transform.position.z);
+        if (FindObjectsOfType<squaremove>().Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -133,6 +140,10 @@ public class squaremove : MonoBehaviour
                 manager.GetComponent<TullyMonster67>().next();
             }
             
+        }
+        if (collision.gameObject.tag.Equals("reset"))
+        {
+            transform.position = new Vector3(ogx, ogy, transform.position.z);
         }
 
     }

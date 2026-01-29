@@ -16,6 +16,10 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] Text wintext;
     [SerializeField] Text losetext;
     [SerializeField] Text scoreText;
+    [SerializeField] AudioSource death;
+    [SerializeField] AudioSource winsound;
+    [SerializeField] AudioSource lazsound;
+    [SerializeField] AudioSource csound;
     private float moves = 0f;
     private float minutes = 0f;
     private float hours = 0f;
@@ -34,6 +38,10 @@ public class TullyMonster67 : MonoBehaviour
         DontDestroyOnLoad(wintext.gameObject);
         DontDestroyOnLoad(losetext.gameObject);
         DontDestroyOnLoad(scoreText.gameObject);
+        DontDestroyOnLoad(death);
+        DontDestroyOnLoad(winsound);
+        DontDestroyOnLoad(lazsound);
+        DontDestroyOnLoad(csound);
         foreach (var sprite in winsprites)
         {
             sprite.SetActive(true);
@@ -73,7 +81,8 @@ public class TullyMonster67 : MonoBehaviour
                 moves = 0f;
                 minutes = 0f;
                 hours = 0f;
-                
+                SceneManager.LoadScene(0);
+
             }
         }
         if (count >= winsprites.Count && !losetext.enabled)
@@ -95,6 +104,7 @@ public class TullyMonster67 : MonoBehaviour
                 hours++;
                 minutes = 0f;
             }
+            
 
         }
 
@@ -107,11 +117,21 @@ public class TullyMonster67 : MonoBehaviour
         {
             winsprites[count].SetActive(false);
             count++;
+            death.PlayOneShot(death.clip);
         }
         
     }
+    public void cannonsound()
+    {
+        csound.PlayOneShot(csound.clip);
+    }
+    public void lazersound()
+    {
+
+    }
     public void win()
     {
+        winsound.PlayOneShot(winsound.clip);
         wintext.enabled = true;
         ifwin = true;
     }
@@ -128,11 +148,13 @@ public class TullyMonster67 : MonoBehaviour
         //winText.enabled = false;
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
+            winsound.PlayOneShot(winsound.clip);
             SceneManager.LoadScene(1);
             //win = false;
         }
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
+            winsound.PlayOneShot(winsound.clip);
             SceneManager.LoadScene(2);
             //win = false;
         }

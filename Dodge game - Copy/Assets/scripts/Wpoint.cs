@@ -9,10 +9,12 @@ public class Wpoint : MonoBehaviour
     [SerializeField] List<GameObject> list = new List<GameObject>();
     [SerializeField] int currentWP = 0;
     [SerializeField] float speed;
+    [SerializeField] TullyMonster67 manager;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        manager = GameObject.Find("Manager").GetComponent<TullyMonster67>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,12 @@ public class Wpoint : MonoBehaviour
             
             gameObject.SetActive(false);
         }
+        if (collision.gameObject.tag.Equals("kirk"))
+        {
+
+            manager.GetComponent<TullyMonster67>().cannonsound();
+        }
+        
 
     }
 }
