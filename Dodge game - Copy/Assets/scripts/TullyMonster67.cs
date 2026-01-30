@@ -12,6 +12,7 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] GameObject life1;
     [SerializeField] GameObject life2;
     [SerializeField] GameObject life3;
+    [SerializeField] GameObject player;
     [SerializeField] GameObject camera;
     [SerializeField] Text wintext;
     [SerializeField] Text losetext;
@@ -31,6 +32,7 @@ public class TullyMonster67 : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(camera);
+        DontDestroyOnLoad(player);
         DontDestroyOnLoad(livesCanvas);
         DontDestroyOnLoad(life1);
         DontDestroyOnLoad(life2);
@@ -82,6 +84,7 @@ public class TullyMonster67 : MonoBehaviour
                 minutes = 0f;
                 hours = 0f;
                 SceneManager.LoadScene(0);
+                //Destroy(this);
 
             }
         }
