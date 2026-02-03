@@ -7,7 +7,7 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] float jumpforce;
     [SerializeField] float speed;
     Animator Animator;
-    SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
