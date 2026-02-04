@@ -5,6 +5,7 @@ public class buildings : MonoBehaviour
     private SpriteRenderer renderer;
     [SerializeField] float xspeed;
     float time = 0;
+    private bool start = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,13 +15,21 @@ public class buildings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        renderer.material.mainTextureOffset += new Vector2(xspeed*Time.deltaTime, 0);
-        time += Time.deltaTime;
-        if(time > 1f)
+        if(start == true)
         {
-            time = 0f;
-            xspeed += 0.05f;
+            renderer.material.mainTextureOffset += new Vector2(xspeed*Time.deltaTime, 0);
+            time += Time.deltaTime;
+            if(time > 1f)
+            {
+                time = 0f;
+                xspeed += 0.05f;
+            }
         }
+
+        
+    }
+    public void settrue()
+    {
+        start = true;
     }
 }

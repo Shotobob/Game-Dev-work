@@ -7,7 +7,15 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] float jumpforce;
     [SerializeField] float speed;
     Animator Animator;
+    private bool start = false;
     private SpriteRenderer spriteRenderer;
+    [SerializeField] GameObject buildings1;
+    [SerializeField] GameObject buildings2;
+    [SerializeField] GameObject buildings3;
+    [SerializeField] GameObject buildings4;
+    [SerializeField] GameObject buildings5;
+    [SerializeField] GameObject buildings6;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +27,16 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(transform.position.x > 5.8f)
+        {
+            buildings1.GetComponent<buildings>().settrue();
+            buildings2.GetComponent<buildings>().settrue();
+            buildings3.GetComponent<buildings>().settrue();
+            buildings4.GetComponent<buildings>().settrue();
+            buildings5.GetComponent<buildings>().settrue();
+            buildings6.GetComponent<buildings>().settrue();
+        }
+
         float moving = 0;
         if (Input.GetKey(KeyCode.S) && isGrounded() == true)
         {
@@ -99,7 +117,11 @@ public class TullyMonster67 : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(castFrom, Vector2.down, .1f);
         //Debug.DrawRay(castFrom, (Vector2.down*.1f), )
         if(hit.transform != null && hit.transform.tag == "g")
+        {
+            
             ig = true;
+        }
+        
         return ig;
     }
    
