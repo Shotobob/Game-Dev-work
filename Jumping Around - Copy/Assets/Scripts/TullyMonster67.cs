@@ -1,4 +1,9 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class TullyMonster67 : MonoBehaviour
 {
@@ -15,10 +20,28 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] GameObject buildings4;
     [SerializeField] GameObject buildings5;
     [SerializeField] GameObject buildings6;
+    [SerializeField] Text Timetext;
+    [SerializeField] Text losetext;
+    [SerializeField] GameObject block1;
+    [SerializeField] GameObject block2;
+    [SerializeField] GameObject block3;
+    [SerializeField] GameObject block4;
+    [SerializeField] GameObject block5;
+    [SerializeField] GameObject block6;
+    [SerializeField] GameObject block7;
+    [SerializeField] GameObject block8;
+    [SerializeField] GameObject block9;
+    [SerializeField] GameObject block10;
+    [SerializeField] GameObject block11;
+    [SerializeField] GameObject block12;
+    private bool death = false;
+    float seconds = 0;
+
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        losetext.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -27,6 +50,18 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if(death == false)
+        {
+            seconds += Time.deltaTime;
+            Timetext.text =  "Time: " + (int) seconds;
+        }
+        if(transform.position.y < -6.8f)
+        {
+            losetext.text = "die, score wwas ts " + (int)seconds;
+            death = true;
+            losetext.enabled = true;
+        }
         if(transform.position.x > 5.8f)
         {
             buildings1.GetComponent<buildings>().settrue();
@@ -35,6 +70,19 @@ public class TullyMonster67 : MonoBehaviour
             buildings4.GetComponent<buildings>().settrue();
             buildings5.GetComponent<buildings>().settrue();
             buildings6.GetComponent<buildings>().settrue();
+           block1.GetComponent<player>().settrue();
+           block2.GetComponent<player>().settrue();
+           block3.GetComponent<player>().settrue();
+           block4.GetComponent<player>().settrue();
+           block5.GetComponent<player>().settrue();
+           block6.GetComponent<player>().settrue();
+           block7.GetComponent<player>().settrue();
+           block8.GetComponent<player>().settrue();
+           block9.GetComponent<player>().settrue();
+           block10.GetComponent<player>().settrue();
+           block11.GetComponent<player>().settrue();
+           block12.GetComponent<player>().settrue();
+
         }
 
         float moving = 0;
