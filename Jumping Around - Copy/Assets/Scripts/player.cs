@@ -21,7 +21,7 @@ public class player : MonoBehaviour
         }
         if(start == true)
         {
-            transform.position = new Vector2(transform.position.x - xspeed, transform.position.y);
+            transform.position = new Vector2(transform.position.x - xspeed*0.05f, transform.position.y);
             time += Time.deltaTime;
             if(time > 1f)
             {
