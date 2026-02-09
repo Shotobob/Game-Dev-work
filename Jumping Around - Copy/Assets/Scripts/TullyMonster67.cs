@@ -13,6 +13,7 @@ public class TullyMonster67 : MonoBehaviour
     [SerializeField] float speed;
     Animator Animator;
     private bool start = false;
+     
     private SpriteRenderer spriteRenderer;
     [SerializeField] GameObject buildings1;
     [SerializeField] GameObject buildings2;
@@ -50,20 +51,22 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(death == false)
+        if(death == false && start == true)
         {
             seconds += Time.deltaTime;
             Timetext.text =  "Time: " + (int) seconds;
         }
+        
         if(transform.position.y < -6.8f)
         {
             losetext.text = "die, score wwas ts " + (int)seconds;
             death = true;
             losetext.enabled = true;
+            start = false;
         }
         if(transform.position.x > 5.8f)
         {
+            start = true;
             buildings1.GetComponent<buildings>().settrue();
             buildings2.GetComponent<buildings>().settrue();
             buildings3.GetComponent<buildings>().settrue();
@@ -172,5 +175,26 @@ public class TullyMonster67 : MonoBehaviour
         
         return ig;
     }
-   
+
+
+    public void OnColliderEnter2D(Collision2D cd)
+    {
+        bool ig = false;
+        Vector2 castFrom = new Vector2(transform.position.x, transform.position.y - GetComponent<SpriteRenderer>().bounds.size.y / 2 - 0.01f);
+        RaycastHit2D hit = Physics2D.Raycast(castFrom, Vector2.down, .1f);
+        //Debug.DrawRay(castFrom, (Vector2.down*.1f), )
+        if(hit.transform != null && hit.transform.tag == "g")
+        {
+            if(left == false && right == false)
+            {
+                transform.parent = cd.transform; 
+            }
+            
+        }
+        
+    }   
+
+    public void OnColliderExit2D (Collision2D cd) {
+        transform.parent = null; 
+    }
 }
