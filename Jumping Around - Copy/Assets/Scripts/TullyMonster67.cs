@@ -51,6 +51,10 @@ public class TullyMonster67 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.R) && death == true)
+        {
+            SceneManager.LoadScene(0);
+        }
         if(death == false && start == true)
         {
             seconds += Time.deltaTime;
