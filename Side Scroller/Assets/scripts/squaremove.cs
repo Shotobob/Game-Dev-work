@@ -79,10 +79,10 @@ public class squaremove : MonoBehaviour
             Animator.SetInteger("State", 2);
             return;
         }
-        if (rb.linearVelocityY > 0.1f && isGrounded() == false)
-        {
-            Animator.SetInteger("State", 2);
-        }
+         if (rb.linearVelocityY > 0.1f && isGrounded() == false)
+         {
+             Animator.SetInteger("State", 2);
+         }
         if (Input.GetKeyDown(KeyCode.A))
         {
             left = true;
@@ -141,34 +141,12 @@ public class squaremove : MonoBehaviour
         
         
     }
-    private void FixedUpdate()
-    {
-        if (win || lose)
-        {
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
-        Vector2 dir = Vector2.zero;
-        if (win == true)
-        {
-            return;
-        }
-        if (up)
-            dir+= new Vector2(0, speed*Time.deltaTime);
-        if(left)
-            dir+= new Vector2(-speed*Time.deltaTime,0);
-        if(down)
-            dir+= new Vector2(0, -speed*Time.deltaTime);
-        if(right)
-            dir+= new Vector2(speed*Time.deltaTime,0);
-    
-        rb.linearVelocity = Vector2.ClampMagnitude(dir, 10f);
-    }
+   
     public bool isGrounded()
     {
         bool ig = false;
         Vector2 castFrom = new Vector2(transform.position.x, transform.position.y - GetComponent<SpriteRenderer>().bounds.size.y / 2 - 0.01f);
-        RaycastHit2D hit = Physics2D.Raycast(castFrom, Vector2.down, .1f);
+        RaycastHit2D hit = Physics2D.Raycast(castFrom, Vector2.down, 0.05f);
         //Debug.DrawRay(castFrom, (Vector2.down*.1f), )
         if(hit.transform != null && hit.transform.tag == "g")
             ig = true;

@@ -4,8 +4,6 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - death
-  - win
   - g
   layers:
   - Default
