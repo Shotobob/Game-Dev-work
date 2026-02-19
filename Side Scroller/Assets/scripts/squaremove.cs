@@ -12,7 +12,7 @@ public class squaremove : MonoBehaviour
     Animator Animator;
     [SerializeField] float jumpforce;
     SpriteRenderer spriteRenderer;
-    
+    bool grounded = false;
     bool win;
     bool lose;
 
@@ -31,6 +31,7 @@ public class squaremove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //grounded = false;
         if(win == true || lose == true)
         {
             if (Input.GetKeyDown(KeyCode.R))
@@ -152,6 +153,15 @@ public class squaremove : MonoBehaviour
             ig = true;
         return ig;
     }
+    public void OnCollisionEnter2D(Collision2D collision){
+        Debug.Log("Collide");
+        if(collision.gameObject.tag.Equals("g"))
+        {
+            grounded = true;
+            
+        }
+
+    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -166,6 +176,13 @@ public class squaremove : MonoBehaviour
             win = true;
             manager.GetComponent<TullyMonster67>().win();
         }
+        if (collision.gameObject.tag.Equals("p"))
+        {
+            //win = true;
+            manager.GetComponent<TullyMonster67>().addpoint();
+            collision.gameObject.SetActive(false);
+        }
+        
 
     }
  
