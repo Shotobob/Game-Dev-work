@@ -8,6 +8,8 @@ TagManager:
   - win
   - g
   - p
+  - check
+  - shield
   layers:
   - Default
   - TransparentFX

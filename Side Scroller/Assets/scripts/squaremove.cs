@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class squaremove : MonoBehaviour
@@ -5,6 +6,7 @@ public class squaremove : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] float speed;
     [SerializeField] GameObject manager;
+    [SerializeField] GameObject Bullet;
     bool up, down, left, right;
     Rigidbody2D rb;
     float ogx = 0;
@@ -37,8 +39,11 @@ public class squaremove : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 lose = false;
+                lose = false;
                 win = false;
-                transform.position = new Vector3(ogx, ogy, transform.position.z);
+                transform.position = new Vector3(-41f, 18f, transform.position.z);
+                ogx = transform.position.x;
+                ogy = transform.position.y;
                 rb.linearVelocity = Vector2.zero;
                 rb.angularVelocity = 0f;
                 rb.constraints = RigidbodyConstraints2D.None;
@@ -127,7 +132,15 @@ public class squaremove : MonoBehaviour
         {
             Animator.SetInteger("State", 3);
         }
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GameObject b = Instantiate(Bullet, transform.position + transform.right * 1.5f, transform.rotation);
+            b.GetComponent<Rigidbody2D>().linearVelocity = b.transform.right * 5f;
+            GameObject c = Instantiate(Bullet, transform.position + transform.right * -1.5f, transform.rotation);
+            c.GetComponent<Rigidbody2D>().linearVelocity = b.transform.right * -5f;
+
+
+        }
 
         if (moving != 0 && isGrounded())
         {
@@ -168,8 +181,12 @@ public class squaremove : MonoBehaviour
         Debug.Log("trigger");
         if (collision.gameObject.tag.Equals("death"))
         {
-            transform.position = new Vector3(ogx, ogy, transform.position.z);
-            manager.GetComponent<TullyMonster67>().endlife();
+            if((gameObject.tag.Equals("Player")))
+            {
+                transform.position = new Vector3(ogx, ogy, transform.position.z);
+                manager.GetComponent<TullyMonster67>().endlife();
+            }
+            
         }
         if (collision.gameObject.tag.Equals("win"))
         {
@@ -182,7 +199,12 @@ public class squaremove : MonoBehaviour
             manager.GetComponent<TullyMonster67>().addpoint();
             collision.gameObject.SetActive(false);
         }
-        
+        if (collision.gameObject.tag.Equals("check"))
+        {
+            ogx = transform.position.x;
+            ogy = transform.position.y;
+        }
+
 
     }
  
