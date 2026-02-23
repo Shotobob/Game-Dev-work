@@ -201,6 +201,7 @@ public class squaremove : MonoBehaviour
         }
         if (collision.gameObject.tag.Equals("check"))
         {
+            collision.gameObject.SetActive(false);
             ogx = transform.position.x;
             ogy = transform.position.y;
         }
